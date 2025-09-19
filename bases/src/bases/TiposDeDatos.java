@@ -1,6 +1,9 @@
 package bases;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class TiposDeDatos {
 	public static void main(String[] args) {
@@ -45,5 +48,17 @@ public class TiposDeDatos {
 		BigDecimal bdSuma = bd1.add(bd2);
 		
 		System.out.println(bdSuma);
+		
+		LocalDateTime ahora = LocalDateTime.now();
+		
+		System.out.println(ahora);
+		
+		LocalDate dia = LocalDate.of(2025, 1, 31);
+		
+		System.out.println(dia.plusMonths(2));
+		
+		LocalTime hora = LocalTime.now();
+		
+		System.out.println(hora);
 	}
 }
