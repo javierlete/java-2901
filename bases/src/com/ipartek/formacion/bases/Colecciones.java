@@ -1,4 +1,4 @@
-package bases;
+package com.ipartek.formacion.bases;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package bases;
+package com.ipartek.formacion.bases;
 
 public class Operadores {
 	public static void main(String[] args) {

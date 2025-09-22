@@ -1,4 +1,4 @@
-package bases;
+package com.ipartek.formacion.bases;
 
 public class SwitchEjemplo {
 	public static void main(String[] args) {
