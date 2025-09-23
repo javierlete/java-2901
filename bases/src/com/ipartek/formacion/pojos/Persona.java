@@ -1,8 +1,13 @@
 package com.ipartek.formacion.pojos;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Persona {
+	// CONSTANTES
+	public static final String NOMBRE_ANONIMO = "Juan Nadie";
+	private static final int MAYORIA_DE_EDAD = 18;
+
 	// VARIABLES DE INSTANCIA
 	private Long id;
 	private String nombre;
@@ -24,12 +29,12 @@ public class Persona {
 	}
 
 	public Persona() {
-		this(null, "ANÓNIMO", null);
+		this(null, NOMBRE_ANONIMO, null);
 	}
-	
+
 	// Constructor de copia
 	public Persona(Persona persona) {
-		this(persona.getId(), persona.getNombre(), persona.getFechaNacimiento());		
+		this(persona.getId(), persona.getNombre(), persona.getFechaNacimiento());
 	}
 
 	// GETTERS Y SETTERS (MÉTODOS DE ACCESO)
@@ -63,6 +68,22 @@ public class Persona {
 		}
 
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public boolean isAnonimo() {
+		return NOMBRE_ANONIMO.equals(nombre);
+	}
+
+	public int getEdad() {
+		if (fechaNacimiento == null) {
+			throw new RuntimeException("No tiene fecha de nacimiento");
+		}
+		
+		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
+	}
+
+	public boolean isMayorDeEdad() {
+		return getEdad() >= MAYORIA_DE_EDAD;
 	}
 
 	@Override
