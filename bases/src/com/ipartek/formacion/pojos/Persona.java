@@ -2,6 +2,7 @@ package com.ipartek.formacion.pojos;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 public class Persona {
 	// CONSTANTES
@@ -9,9 +10,9 @@ public class Persona {
 	private static final int MAYORIA_DE_EDAD = 18;
 
 	// VARIABLES DE INSTANCIA
-	private Long id;
-	private String nombre;
-	private LocalDate fechaNacimiento;
+	protected Long id;
+	protected String nombre;
+	protected LocalDate fechaNacimiento;
 
 	// CONSTRUCTORES
 	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
@@ -84,6 +85,24 @@ public class Persona {
 
 	public boolean isMayorDeEdad() {
 		return getEdad() >= MAYORIA_DE_EDAD;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fechaNacimiento, id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre);
 	}
 
 	@Override
