@@ -4,19 +4,20 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.ipartek.formacion.pojos.Empleado;
+import com.ipartek.formacion.pojos.EmpleadoIndefinido;
+import com.ipartek.formacion.pojos.EmpleadoPorHoras;
 import com.ipartek.formacion.pojos.Local;
 import com.ipartek.formacion.pojos.Persona;
 
 public class EmpleadoPrueba {
 	public static void main(String[] args) {
-		Empleado empleado = new Empleado("Pepe", LocalDate.of(2001, 2, 3), new BigDecimal("23456"));
+		Empleado empleado = new EmpleadoIndefinido("Pepe", LocalDate.of(2001, 2, 3), 14, new BigDecimal("23456"));
 
 		System.out.println(empleado);
 
 		empleado.setId(1L);
 		empleado.setNombre("Javier");
 		empleado.setFechaNacimiento(LocalDate.of(2000, 1, 2));
-		empleado.setSueldoMensual(new BigDecimal("12345"));
 
 		System.out.println(empleado);
 
@@ -46,7 +47,7 @@ public class EmpleadoPrueba {
 		Local local = new Local("Bilbao", empleado);
 		
 		local.entrar(empleado);
-		local.entrar(new Empleado("Pepe", LocalDate.of(2003, 2, 1), new BigDecimal("12345")));
+		local.entrar(new EmpleadoPorHoras("Pepe", LocalDate.of(2003, 2, 1), 80, new BigDecimal("15")));
 		
 		persona2.setNombre("Juan");
 		
@@ -54,10 +55,13 @@ public class EmpleadoPrueba {
 		
 		for(Persona p: local.getVisitas()) {
 			System.out.println(p);
+			if(p instanceof Empleado e) {
+				System.out.println(e.getSueldoMensual());
+			}
 		}
 		
-		Empleado e1 = new Empleado("Javier", LocalDate.of(2000, 1, 2), new BigDecimal("12345"));
-		Empleado e2 = new Empleado("Javier", LocalDate.of(2000, 1, 2), new BigDecimal("12345"));
+		Empleado e1 = new EmpleadoIndefinido("Javier", LocalDate.of(2000, 1, 2), 14, new BigDecimal("12345"));
+		Empleado e2 = new EmpleadoIndefinido("Javier", LocalDate.of(2000, 1, 2), 14, new BigDecimal("12345"));
 		
 		System.out.println(e1);
 		System.out.println(e2);

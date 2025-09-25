@@ -2,34 +2,22 @@ package com.ipartek.formacion.pojos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Empleado extends Persona {
-	private BigDecimal sueldoMensual;
+public abstract class Empleado extends Persona {
 
-	public Empleado(Long id, String nombre, LocalDate fechaNacimiento, BigDecimal sueldoMensual) {
+	public Empleado(Long id, String nombre, LocalDate fechaNacimiento) {
 		super(id, nombre, fechaNacimiento);
-		setSueldoMensual(sueldoMensual);
 	}
 
-	public Empleado(String nombre, LocalDate fechaNacimiento, BigDecimal sueldoMensual) {
-		this(null, nombre, fechaNacimiento, sueldoMensual);
+	public Empleado(String nombre, LocalDate fechaNacimiento) {
+		this(null, nombre, fechaNacimiento);
 	}
 
-	public BigDecimal getSueldoMensual() {
-		return sueldoMensual;
-	}
-
-	public void setSueldoMensual(BigDecimal sueldoMensual) {
-		this.sueldoMensual = sueldoMensual;
-	}
+	public abstract BigDecimal getSueldoMensual();
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(sueldoMensual);
-		return result;
+		return super.hashCode();
 	}
 
 	@Override
@@ -40,14 +28,13 @@ public class Empleado extends Persona {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Empleado other = (Empleado) obj;
-		return Objects.equals(sueldoMensual, other.sueldoMensual);
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Empleado [id=%s, nombre=%s, fechaNacimiento=%s, sueldoMensual=%s]", id,
-				nombre, fechaNacimiento, sueldoMensual);
+		return String.format("Empleado [id=%s, nombre=%s, fechaNacimiento=%s]", id,
+				nombre, fechaNacimiento);
 	}
 
 }
