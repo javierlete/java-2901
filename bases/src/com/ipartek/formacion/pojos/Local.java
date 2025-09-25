@@ -2,7 +2,7 @@ package com.ipartek.formacion.pojos;
 
 import java.util.HashSet;
 
-public class Local {
+public class Local implements Imprimible {
 	private static final boolean PARA_ADULTOS_POR_DEFECTO = false;
 	public static final boolean PARA_ADULTOS = true;
 	
@@ -89,6 +89,16 @@ public class Local {
 	public String toString() {
 		return String.format("Local [id=%s, nombre=%s, paraAdultos=%s, encargado=%s]", id, nombre, paraAdultos,
 				encargado);
+	}
+
+	@Override
+	public String imprimir() {
+		return String.format("""
+				Id:           %s
+				Nombre:       %s
+				Para adultos: %s
+				Encargado:    %s
+				""", id, nombre, paraAdultos ? "Sí": "No", encargado.getNombre());
 	}
 
 }

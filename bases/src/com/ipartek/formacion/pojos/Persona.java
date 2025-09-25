@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
 
-public class Persona {
+public class Persona implements Imprimible {
 	// CONSTANTES
 	public static final String NOMBRE_ANONIMO = "Juan Nadie";
 	private static final int MAYORIA_DE_EDAD = 18;
@@ -108,6 +108,15 @@ public class Persona {
 	@Override
 	public String toString() {
 		return "Persona [id=" + id + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + "]";
+	}
+
+	@Override
+	public String imprimir() {
+		return String.format("""
+				Id:              %s
+				Nombre:          %s
+				FechaNacimiento: %s
+				""", id, nombre, fechaNacimiento);
 	}
 
 }
