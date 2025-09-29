@@ -5,7 +5,7 @@ import static com.ipartek.formacion.bibliotecas.Consola.*;
 import java.util.Optional;
 
 import com.ipartek.formacion.citas.accesodatos.DaoCita;
-import com.ipartek.formacion.citas.accesodatos.DaoCitaTreeMap;
+import com.ipartek.formacion.citas.accesodatos.DaoCitaJdbc;
 import com.ipartek.formacion.citas.entidades.Cita;
 
 public class PresentacionConsola {
@@ -13,7 +13,7 @@ public class PresentacionConsola {
 
 	private static final int SALIR = 0;
 
-	private static final DaoCita DAO = new DaoCitaTreeMap();
+	private static final DaoCita DAO = new DaoCitaJdbc();
 	
 	public static void main(String[] args) {
 		int opcion;

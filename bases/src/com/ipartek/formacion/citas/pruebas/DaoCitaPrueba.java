@@ -3,12 +3,12 @@ package com.ipartek.formacion.citas.pruebas;
 import java.time.LocalDateTime;
 
 import com.ipartek.formacion.citas.accesodatos.DaoCita;
-import com.ipartek.formacion.citas.accesodatos.DaoCitaArrayList;
+import com.ipartek.formacion.citas.accesodatos.DaoCitaJdbc;
 import com.ipartek.formacion.citas.entidades.Cita;
 
 public class DaoCitaPrueba {
 	public static void main(String[] args) {
-		DaoCita dao = new DaoCitaArrayList();
+		DaoCita dao = new DaoCitaJdbc();
 
 		dao.insertar(
 				new Cita("Antesdeayer", LocalDateTime.of(2025, 9, 24, 8, 15), LocalDateTime.of(2025, 9, 24, 13, 45)));
