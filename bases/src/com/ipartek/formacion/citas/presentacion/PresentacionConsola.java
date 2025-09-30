@@ -13,7 +13,7 @@ public class PresentacionConsola {
 
 	private static final int SALIR = 0;
 
-	private static final DaoCita DAO = Fabrica.obtenerDao("jdbc");
+	private static final DaoCita DAO = Fabrica.obtenerDao();
 	
 	public static void main(String[] args) {
 		int opcion;
