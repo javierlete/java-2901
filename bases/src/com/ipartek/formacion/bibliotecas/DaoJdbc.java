@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.ipartek.formacion.citas.accesodatos.AccesoDatosException;
-
 public class DaoJdbc<T> {
 	private String url;
 	private String user;

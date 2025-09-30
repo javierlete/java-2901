@@ -1,10 +1,10 @@
-package com.ipartek.formacion.citas.accesodatos;
+package com.ipartek.formacion.bibliotecas;
 
 import java.util.Optional;
 
 import com.ipartek.formacion.citas.entidades.Cita;
 
-interface Dao<T> {
+public interface Dao<T> {
 	Iterable<T> obtenerTodos();
 	Optional<Cita> obtenerPorId(Long id);
 	

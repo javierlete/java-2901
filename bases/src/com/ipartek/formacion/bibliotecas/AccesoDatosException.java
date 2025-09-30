@@ -1,4 +1,4 @@
-package com.ipartek.formacion.citas.accesodatos;
+package com.ipartek.formacion.bibliotecas;
 
 public class AccesoDatosException extends RuntimeException {
 
