@@ -9,7 +9,7 @@ import com.ipartek.formacion.citas.accesodatos.DaoCita;
 import com.ipartek.formacion.citas.entidades.Cita;
 
 public class PresentacionConsola {
-	private static final String FORMATO_LINEA = "| %4s | %-20s | %20s | %20s |";
+	private static final String FORMATO_LINEA = "| %4s | %-20s | %20s | %20s | %10s |";
 
 	private static final int SALIR = 0;
 
@@ -100,20 +100,21 @@ public class PresentacionConsola {
 	private static void mostrarFicha(Optional<Cita> posibleCita) {
 		posibleCita.ifPresentOrElse(cita -> pfl("""
 
-				Id:     %s
-				Texto:  %s
-				Inicio: %s
-				Fin:    %s
+				Id:      %s
+				Texto:   %s
+				Inicio:  %s
+				Fin:     %s
+				Usuario: %s
 
-				""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin()),
+				""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(), cita.getUsuario() != null ? cita.getUsuario().getNombre() : ""),
 				() -> pl("No se ha encontrado la cita"));
 	}
 
 	private static void mostrarLineaCabecera() {
-		pfl(FORMATO_LINEA, "Id", "Texto", "Inicio", "Fin");
+		pfl(FORMATO_LINEA, "Id", "Texto", "Inicio", "Fin", "Usuario");
 	}
 
 	private static void mostrarLinea(Cita cita) {
-		pfl(FORMATO_LINEA, cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin());
+		pfl(FORMATO_LINEA, cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(), cita.getUsuario() != null ? cita.getUsuario().getNombre() : "");
 	}
 }
