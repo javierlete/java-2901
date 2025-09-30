@@ -8,7 +8,7 @@ import java.util.Optional;
 import com.ipartek.formacion.bibliotecas.DaoJdbc;
 import com.ipartek.formacion.citas.entidades.Cita;
 
-public class DaoCitaJdbc implements DaoCita {
+class DaoCitaJdbc implements DaoCita {
 	private DaoJdbc<Cita> dao = new DaoJdbc<Cita>("jdbc:sqlite:bdd/citas.db", "", "");
 
 	@Override

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.ipartek.formacion.citas.entidades.Cita;
 
-public class DaoCitaArrayList implements DaoCita {
+class DaoCitaArrayList implements DaoCita {
 	private final ArrayList<Cita> citas = new ArrayList<>();
 
 	public DaoCitaArrayList() {
