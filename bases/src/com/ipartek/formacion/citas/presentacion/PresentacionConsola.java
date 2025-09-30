@@ -4,8 +4,8 @@ import static com.ipartek.formacion.bibliotecas.Consola.*;
 
 import java.util.Optional;
 
+import com.ipartek.formacion.bibliotecas.Fabrica;
 import com.ipartek.formacion.citas.accesodatos.DaoCita;
-import com.ipartek.formacion.citas.accesodatos.Fabrica;
 import com.ipartek.formacion.citas.entidades.Cita;
 
 public class PresentacionConsola {
@@ -13,11 +13,11 @@ public class PresentacionConsola {
 
 	private static final int SALIR = 0;
 
-	private static final DaoCita DAO = Fabrica.obtenerDao();
-	
+	private static final DaoCita DAO = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
+
 	public static void main(String[] args) {
 		int opcion;
-		
+
 		do {
 			mostrarMenu();
 			opcion = elegirOpcion();
@@ -27,19 +27,19 @@ public class PresentacionConsola {
 
 	private static void mostrarMenu() {
 		pl("""
-				
+
 				MENU
 				====
-				
+
 				1. Listado
 				2. Buscar por id
 				3. Buscar por texto
 				4. Insertar
 				5. Modificar
 				6. Borrar
-				
+
 				0. Salir
-				
+
 				""");
 	}
 
@@ -48,7 +48,7 @@ public class PresentacionConsola {
 	}
 
 	private static void procesarOpcion(int opcion) {
-		switch(opcion) {
+		switch (opcion) {
 		case 1 -> listado();
 		case 2 -> buscarPorId();
 		case 3 -> buscarPorTexto();
@@ -71,7 +71,7 @@ public class PresentacionConsola {
 
 	private static void buscarPorTexto() {
 		String texto = leerString("Texto");
-		
+
 		mostrarLineaCabecera();
 		DAO.buscarPorTexto(texto).forEach(PresentacionConsola::mostrarLinea);
 	}
@@ -81,7 +81,8 @@ public class PresentacionConsola {
 	}
 
 	private static void modificar() {
-		DAO.modificar(new Cita(leerLong("Id"), leerString("Nombre"), leerLocalDateTime("Inicio"), leerLocalDateTime("Fin")));
+		DAO.modificar(
+				new Cita(leerLong("Id"), leerString("Nombre"), leerLocalDateTime("Inicio"), leerLocalDateTime("Fin")));
 	}
 
 	private static void borrar() {
@@ -95,16 +96,17 @@ public class PresentacionConsola {
 	private static void error(String mensaje) {
 		pl(mensaje);
 	}
-	
+
 	private static void mostrarFicha(Optional<Cita> posibleCita) {
 		posibleCita.ifPresentOrElse(cita -> pfl("""
-				
+
 				Id:     %s
 				Texto:  %s
 				Inicio: %s
 				Fin:    %s
-				
-				""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin()), () -> pl("No se ha encontrado la cita"));
+
+				""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin()),
+				() -> pl("No se ha encontrado la cita"));
 	}
 
 	private static void mostrarLineaCabecera() {

@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 import com.ipartek.formacion.citas.entidades.Cita;
 
-class DaoCitaTreeMap implements DaoCita {
+public class DaoCitaTreeMap implements DaoCita {
 	private TreeMap<Long, Cita> citas = new TreeMap<>();
 
 	public DaoCitaTreeMap() {
