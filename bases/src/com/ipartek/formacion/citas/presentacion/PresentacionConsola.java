@@ -6,14 +6,17 @@ import java.util.Optional;
 
 import com.ipartek.formacion.bibliotecas.Fabrica;
 import com.ipartek.formacion.citas.accesodatos.DaoCita;
+import com.ipartek.formacion.citas.accesodatos.DaoUsuario;
 import com.ipartek.formacion.citas.entidades.Cita;
+import com.ipartek.formacion.citas.entidades.Usuario;
 
 public class PresentacionConsola {
 	private static final String FORMATO_LINEA = "| %4s | %-20s | %20s | %20s | %10s |";
 
 	private static final int SALIR = 0;
 
-	private static final DaoCita DAO = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
+	private static final DaoCita DAO_CITA = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
+	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtenerObjeto("dao.usuario");
 
 	public static void main(String[] args) {
 		int opcion;
@@ -61,32 +64,35 @@ public class PresentacionConsola {
 	}
 
 	private static void listado() {
-		mostrarLineaCabecera();
-		DAO.obtenerTodos().forEach(PresentacionConsola::mostrarLinea);
+		mostrarCitaLineaCabecera();
+		DAO_CITA.obtenerTodos().forEach(PresentacionConsola::mostrarCitaLinea);
 	}
 
 	private static void buscarPorId() {
-		mostrarFicha(DAO.obtenerPorId(leerLong("Id")));
+		mostrarCitaFicha(DAO_CITA.obtenerPorId(leerLong("Id")));
 	}
 
 	private static void buscarPorTexto() {
 		String texto = leerString("Texto");
 
-		mostrarLineaCabecera();
-		DAO.buscarPorTexto(texto).forEach(PresentacionConsola::mostrarLinea);
+		mostrarCitaLineaCabecera();
+		DAO_CITA.buscarPorTexto(texto).forEach(PresentacionConsola::mostrarCitaLinea);
 	}
 
 	private static void insertar() {
-		DAO.insertar(new Cita(leerString("Nombre"), leerLocalDateTime("Inicio"), leerLocalDateTime("Fin")));
+		mostrarListadoUsuarios();
+		DAO_CITA.insertar(new Cita(leerString("Texto"), leerLong("Id de usuario"), leerLocalDateTime("Inicio"),
+				leerLocalDateTime("Fin")));
 	}
 
 	private static void modificar() {
-		DAO.modificar(
-				new Cita(leerLong("Id"), leerString("Nombre"), leerLocalDateTime("Inicio"), leerLocalDateTime("Fin")));
+		mostrarListadoUsuarios();
+		DAO_CITA.modificar(new Cita(leerLong("Id"), leerString("Texto"), leerLong("Id de usuario"), leerLocalDateTime("Inicio"),
+				leerLocalDateTime("Fin")));
 	}
 
 	private static void borrar() {
-		DAO.borrar(leerLong("Id"));
+		DAO_CITA.borrar(leerLong("Id"));
 	}
 
 	private static void salir() {
@@ -97,24 +103,36 @@ public class PresentacionConsola {
 		pl(mensaje);
 	}
 
-	private static void mostrarFicha(Optional<Cita> posibleCita) {
-		posibleCita.ifPresentOrElse(cita -> pfl("""
+	private static void mostrarCitaFicha(Optional<Cita> posibleCita) {
+		posibleCita.ifPresentOrElse(
+				cita -> pfl("""
 
-				Id:      %s
-				Texto:   %s
-				Inicio:  %s
-				Fin:     %s
-				Usuario: %s
+						Id:      %s
+						Texto:   %s
+						Inicio:  %s
+						Fin:     %s
+						Usuario: %s
 
-				""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(), cita.getUsuario() != null ? cita.getUsuario().getNombre() : ""),
+						""", cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(),
+						cita.getUsuario() != null ? cita.getUsuario().getNombre() : ""),
 				() -> pl("No se ha encontrado la cita"));
 	}
 
-	private static void mostrarLineaCabecera() {
+	private static void mostrarCitaLineaCabecera() {
 		pfl(FORMATO_LINEA, "Id", "Texto", "Inicio", "Fin", "Usuario");
 	}
 
-	private static void mostrarLinea(Cita cita) {
-		pfl(FORMATO_LINEA, cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(), cita.getUsuario() != null ? cita.getUsuario().getNombre() : "");
+	private static void mostrarCitaLinea(Cita cita) {
+		pfl(FORMATO_LINEA, cita.getId(), cita.getTexto(), cita.getInicio(), cita.getFin(),
+				cita.getUsuario() != null ? cita.getUsuario().getNombre() : "");
+	}
+
+	private static void mostrarListadoUsuarios() {
+		pfl("%4s %s", "Id", "Nombre");
+		DAO_USUARIO.obtenerTodos().forEach(PresentacionConsola::mostrarUsuarioLinea);
+	}
+
+	private static void mostrarUsuarioLinea(Usuario usuario) {
+		pfl("%4s %s", usuario.getId(), usuario.getNombre());
 	}
 }
