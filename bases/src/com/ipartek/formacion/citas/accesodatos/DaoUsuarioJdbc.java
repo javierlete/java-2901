@@ -8,7 +8,7 @@ import com.ipartek.formacion.bibliotecas.DaoJdbc;
 import com.ipartek.formacion.citas.entidades.Usuario;
 
 public class DaoUsuarioJdbc implements DaoUsuario {
-	private DaoJdbc<Usuario> dao = new DaoJdbc<Usuario>("jdbc:sqlite:bdd/citas.db", "", "");
+	private DaoJdbc<Usuario> dao = new DaoJdbc<Usuario>(Globales.URL, Globales.USER, Globales.PASS);
 
 	@Override
 	public Iterable<Usuario> obtenerTodos() {
