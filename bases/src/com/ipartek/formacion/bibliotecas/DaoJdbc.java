@@ -19,10 +19,10 @@ public class DaoJdbc<T> {
 		this.pass = pass;
 	}
 
-	public void ejecutarCambio(String sql, Object...args) {
+	public void ejecutarCambio(String sql, Object... args) {
 		ejecutarConsulta(sql, null, args);
 	}
-	
+
 	public Optional<T> ejecutarConsultaUno(String sql, Mapeador<T> mapeador, Object... args) {
 		Iterable<T> objetos = ejecutarConsulta(sql, mapeador, args);
 
@@ -43,26 +43,29 @@ public class DaoJdbc<T> {
 				pst.setObject(i++, arg);
 			}
 
-			if (sql.startsWith("SELECT")) {
-				try (ResultSet rs = pst.executeQuery()) {
-					ArrayList<T> objetos = new ArrayList<>();
+			if (pst.execute()) {
+				ResultSet rs = pst.getResultSet();
+				ArrayList<T> objetos = new ArrayList<>();
 
-					while (rs.next()) {
-						objetos.add(mapeador.mapear(rs));
-					}
-
-					return objetos;
+				while (rs.next()) {
+					objetos.add(mapeador.mapear(rs));
 				}
-			} else {
-				pst.executeUpdate();
 
+				return objetos;
+			} else {
+				int updateCount = pst.getUpdateCount();
+				
+				if(updateCount != 1) {
+					throw new AccesoDatosException("Se han modificado " + updateCount + " registros");
+				}
+				
 				return null;
 			}
 		} catch (SQLException e) {
 			throw new AccesoDatosException("Error al ejecutar la consulta", e);
 		}
 	}
-	
+
 	public interface Mapeador<T> {
 		T mapear(ResultSet rs) throws SQLException;
 	}
