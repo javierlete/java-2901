@@ -18,8 +18,17 @@ public class Cita {
 		setFin(fin);
 	}
 
+	public Cita(Long id, String texto, Long idUsuario, LocalDateTime inicio,
+			LocalDateTime fin) {
+		this(id, new Usuario(idUsuario, null), texto, inicio, fin);
+	}
+
 	public Cita(Usuario usuario, String texto, LocalDateTime inicio, LocalDateTime fin) {
 		this(null, usuario, texto, inicio, fin);
+	}
+
+	public Cita(String texto, Long idUsuario, LocalDateTime inicio, LocalDateTime fin) {
+		this(null, new Usuario(idUsuario, null), texto, inicio, fin);
 	}
 
 	public Cita(Long id, String texto, LocalDateTime inicio, LocalDateTime fin) {
