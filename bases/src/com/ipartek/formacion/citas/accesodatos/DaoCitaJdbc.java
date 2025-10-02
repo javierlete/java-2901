@@ -30,7 +30,7 @@ public class DaoCitaJdbc implements DaoCita {
 	@Override
 	public Cita insertar(Cita cita) {
 		dao.ejecutarCambio("INSERT INTO citas (texto, inicio, fin, usuario_id) VALUES (?,?,?,?)", cita.getTexto(),
-				Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()), cita.getUsuario().getId());
+				Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()), cita.getUsuario() == null ? null : cita.getUsuario().getId());
 
 		return cita;
 	}
@@ -38,7 +38,7 @@ public class DaoCitaJdbc implements DaoCita {
 	@Override
 	public Cita modificar(Cita cita) {
 		dao.ejecutarCambio("UPDATE citas SET texto=?, inicio=?, fin=?, usuario_id=? WHERE id=?", cita.getTexto(),
-				Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()), cita.getUsuario().getId(), cita.getId());
+				Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()), cita.getUsuario() == null ? null : cita.getUsuario().getId(), cita.getId());
 
 		return cita;
 	}
