@@ -3,6 +3,7 @@
 	<name>ejemploweb</name>
 	<comment></comment>
 	<projects>
+		<project>bases</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
