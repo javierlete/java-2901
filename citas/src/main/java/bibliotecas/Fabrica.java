@@ -1,6 +1,5 @@
 package bibliotecas;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ public class Fabrica {
 	
 	static {
 		try {
-			props.load(new FileReader("fabrica.properties"));
+			props.load(Fabrica.class.getClassLoader().getResourceAsStream("fabrica.properties"));
 		} catch (IOException e) {
 			throw new ExceptionInInitializerError("No se ha podido leer la configuración: " + e.getMessage());
 		}
