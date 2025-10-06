@@ -13,10 +13,16 @@ public class DaoJdbc<T> {
 	private String user;
 	private String pass;
 
-	public DaoJdbc(String url, String user, String pass) {
+	public DaoJdbc(String url, String user, String pass, String driver) {
 		this.url = url;
 		this.user = user;
 		this.pass = pass;
+		
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			throw new AccesoDatosException("No se ha encontrado el driver " + driver, e);
+		}
 	}
 
 	public void ejecutarCambio(String sql, Object... args) {
