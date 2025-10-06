@@ -1,8 +1,11 @@
 package com.ipartek.formacion.citas.presentacion.controladores.admin;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
+import com.ipartek.formacion.bibliotecas.Ruta;
 import com.ipartek.formacion.citas.entidades.Cita;
 import com.ipartek.formacion.citas.presentacion.controladores.Globales;
 
@@ -19,16 +22,24 @@ public class AdminListadoControladorServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println(request.getPathInfo());
-
-		switch (request.getPathInfo()) {
-		case "/listado" -> listado(request, response);
-		case "/editar" -> editar(request, response);
-		case "/borrar" -> borrar(request, response);
-		case "/anyadir" -> anyadir(request, response);
-		case "/guardar" -> guardar(request, response);
-		default -> response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		
+		for(Method metodo: getClass().getDeclaredMethods()) {
+			System.out.println(metodo.getName());
+			
+			Ruta ruta = metodo.getAnnotation(Ruta.class);
+			
+			System.out.println(ruta);
+			
+			if(ruta != null && ruta.value().equals(request.getPathInfo())) {
+				try {
+					metodo.invoke(this, request, response);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-
+		
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,6 +47,7 @@ public class AdminListadoControladorServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	@Ruta("/guardar")
 	private void guardar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("GUARDAR");
 
@@ -67,6 +79,7 @@ public class AdminListadoControladorServlet extends HttpServlet {
 		response.sendRedirect("listado");
 	}
 
+	@Ruta("/editar")
 	private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("EDITAR");
 
@@ -88,6 +101,7 @@ public class AdminListadoControladorServlet extends HttpServlet {
 		anyadir(request, response);
 	}
 
+	@Ruta("/borrar")
 	private void borrar(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// Recojer datos de la petición
 		String sId = request.getParameter("id");
@@ -104,6 +118,7 @@ public class AdminListadoControladorServlet extends HttpServlet {
 		response.sendRedirect("listado");
 	}
 
+	@Ruta("/anyadir")
 	private void anyadir(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("AÑADIR");
@@ -118,6 +133,7 @@ public class AdminListadoControladorServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/vistas/admin/formulario.jsp").forward(request, response);
 	}
 
+	@Ruta("/listado")
 	private void listado(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Recojer datos de la petición
