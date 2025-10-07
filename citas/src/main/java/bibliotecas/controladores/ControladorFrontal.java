@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import bibliotecas.EscanerAnotaciones;
 import jakarta.servlet.ServletException;
@@ -19,25 +21,31 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/cf/*")
 public class ControladorFrontal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = Logger.getLogger(ControladorFrontal.class.getName());
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			System.out.println(request.getPathInfo());
+			log.log(Level.INFO, "PATH_INFO: {0}", request.getPathInfo());
 
 			List<Class<?>> clases = EscanerAnotaciones.findClassesWithAnnotation("controladores", Controlador.class);
 
 			for (Class<?> clase : clases) {
-				System.out.println(clase.getName());
+				log.log(Level.FINER, "CLASE?: {0}", clase.getName());
 
 				for (Method metodo : clase.getDeclaredMethods()) {
-					System.out.println(metodo.getName());
+					log.log(Level.FINEST, "METODO?: {0}", metodo.getName());
 
 					Ruta ruta = metodo.getAnnotation(Ruta.class);
 
-					System.out.println(ruta);
+					log.log(Level.FINEST, "@RUTA?: {0}", ruta);
 
 					if (ruta != null && ruta.value().equals(request.getPathInfo())) {
+						log.log(Level.FINE, "CLASE!: {0}", clase.getName());
+						log.log(Level.FINE, "METODO!: {0}", metodo.getName());
+						log.log(Level.FINE, "@RUTA!: {0}", ruta);
+						
 						Map<String, String> entrada = new HashMap<>();
 						Map<String, Object> salida = new HashMap<>();
 
@@ -50,7 +58,7 @@ public class ControladorFrontal extends HttpServlet {
 							entrada.put(parametro, valor);
 						}
 
-						System.out.println(entrada);
+						log.log(Level.INFO, "ENTRADA: {0}", entrada);
 
 						Object resultado = null;
 
@@ -62,13 +70,13 @@ public class ControladorFrontal extends HttpServlet {
 						case 0 -> resultado = metodo.invoke(controlador);
 						}
 
-						System.out.println(salida);
+						log.log(Level.INFO, "SALIDA: {0}", salida.toString());
 
 						for (Entry<String, Object> par : salida.entrySet()) {
 							request.setAttribute(par.getKey(), par.getValue());
 						}
 
-						System.out.println(resultado);
+						log.log(Level.INFO, "RESULTADO: {0}", resultado);
 
 						if (resultado != null && resultado instanceof String vista) {
 							if (vista.startsWith("redirect:")) {
@@ -82,10 +90,12 @@ public class ControladorFrontal extends HttpServlet {
 				}
 			}
 
+			log.log(Level.WARNING, "No se ha encontrado la ruta " + request.getPathInfo());
+			
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} catch (ClassNotFoundException | SecurityException | IllegalAccessException | InvocationTargetException
 				| InstantiationException | IllegalArgumentException | NoSuchMethodException | IOException e) {
-			e.printStackTrace();
+			log.log(Level.SEVERE, "No se ha podido procesar la ruta", e);
 		}
 	}
 
