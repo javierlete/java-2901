@@ -11,7 +11,9 @@
 
 <ul>
 <c:forEach items="${citas}" var="c">
-	<li>${c.texto}: ${c.inicio} -> ${c.fin}</li>
+	<li>
+		<a href="detalle?id=${c.id}">${c.texto}</a>: 
+		${c.inicio} => ${c.fin}</li>
 </c:forEach>
 </ul>
 </body>
