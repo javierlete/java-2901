@@ -122,7 +122,7 @@ public class ControladorFrontal extends HttpServlet {
 		for (Entry<String, Object> par : salida.entrySet()) {
 			if ("sesion".equals(par.getKey()) && "invalidar".equals(par.getValue())) {
 				request.getSession().invalidate();
-			} else if(par.getKey().startsWith("sesion.")) {
+			} else if (par.getKey().startsWith("sesion.")) {
 				request.getSession().setAttribute(par.getKey().replace("sesion.", ""), par.getValue());
 			} else {
 				request.setAttribute(par.getKey(), par.getValue());
@@ -142,6 +142,16 @@ public class ControladorFrontal extends HttpServlet {
 
 			entrada.put(parametro, valor);
 		}
+
+		Enumeration<String> atributos = request.getSession().getAttributeNames();
+
+		while (atributos.hasMoreElements()) {
+			String atributo = atributos.nextElement();
+			String valor = (String) request.getSession().getAttribute(atributo);
+
+			entrada.put("sesion." + atributo, valor);
+		}
+
 		return entrada;
 	}
 
