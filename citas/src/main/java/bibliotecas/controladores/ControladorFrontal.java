@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/cf/*")
 public class ControladorFrontal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final Logger log = Logger.getLogger(ControladorFrontal.class.getName());
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,58 +45,104 @@ public class ControladorFrontal extends HttpServlet {
 						log.log(Level.FINE, "CLASE!: {0}", clase.getName());
 						log.log(Level.FINE, "METODO!: {0}", metodo.getName());
 						log.log(Level.FINE, "@RUTA!: {0}", ruta);
-						
-						Map<String, String> entrada = new HashMap<>();
-						Map<String, Object> salida = new HashMap<>();
 
-						Enumeration<String> parametros = request.getParameterNames();
+						ejecutarMetodo(request, response, clase, metodo);
 
-						while (parametros.hasMoreElements()) {
-							String parametro = parametros.nextElement();
-							String valor = request.getParameter(parametro);
-
-							entrada.put(parametro, valor);
-						}
-
-						log.log(Level.INFO, "ENTRADA: {0}", entrada);
-
-						Object resultado = null;
-
-						Object controlador = clase.getDeclaredConstructor().newInstance();
-						
-						switch (metodo.getParameterCount()) {
-						case 2 -> resultado = metodo.invoke(controlador, entrada, salida);
-						case 1 -> resultado = metodo.invoke(controlador, salida);
-						case 0 -> resultado = metodo.invoke(controlador);
-						}
-
-						log.log(Level.INFO, "SALIDA: {0}", salida.toString());
-
-						for (Entry<String, Object> par : salida.entrySet()) {
-							request.setAttribute(par.getKey(), par.getValue());
-						}
-
-						log.log(Level.INFO, "RESULTADO: {0}", resultado);
-
-						if (resultado != null && resultado instanceof String vista) {
-							if (vista.startsWith("redirect:")) {
-								response.sendRedirect(request.getContextPath() + vista.replace("redirect:", ""));
-							} else {
-								request.getRequestDispatcher("/WEB-INF/vistas/" + vista + ".jsp").forward(request,
-										response);
-							}
-						}
+						return;
 					}
 				}
 			}
 
 			log.log(Level.WARNING, "No se ha encontrado la ruta " + request.getPathInfo());
-			
+
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		} catch (ClassNotFoundException | SecurityException | IllegalAccessException | InvocationTargetException
 				| InstantiationException | IllegalArgumentException | NoSuchMethodException | IOException e) {
 			log.log(Level.SEVERE, "No se ha podido procesar la ruta", e);
 		}
+	}
+
+	private void ejecutarMetodo(HttpServletRequest request, HttpServletResponse response, Class<?> clase, Method metodo)
+			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			IOException, ServletException {
+		// Extraer información de la petición
+		Map<String, String> entrada = recogerParametros(request);
+
+		log.log(Level.INFO, "ENTRADA: {0}", entrada);
+
+		// Convertir la información recibida
+		// Empaquetar en objetos
+		// Ejecutar lógica de negocio
+		Map<String, Object> salida = new HashMap<>();
+		String resultado = (String) invocarMetodo(clase, metodo, entrada, salida);
+
+		log.log(Level.INFO, "SALIDA: {0}", salida.toString());
+
+		// Empaquetar objetos para la siguiente vista
+		crearAtributos(request, salida);
+
+		log.log(Level.INFO, "RESULTADO: {0}", resultado);
+
+		if (resultado != null && resultado instanceof String vista) {
+			// Mostrar la siguiente vista
+			saltarAVista(request, response, vista);
+		} else {
+			log.log(Level.SEVERE, "No se ha proporcionado vista");
+		}
+
+		return;
+	}
+
+	private void saltarAVista(HttpServletRequest request, HttpServletResponse response, String vista)
+			throws IOException, ServletException {
+		if (vista.startsWith("redirect:")) {
+			response.sendRedirect(request.getContextPath() + vista.replace("redirect:", ""));
+		} else {
+			request.getRequestDispatcher("/WEB-INF/vistas/" + vista + ".jsp").forward(request, response);
+		}
+	}
+
+	private Object invocarMetodo(Class<?> clase, Method metodo, Map<String, String> entrada, Map<String, Object> salida)
+			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		Object resultado;
+		Object controlador = clase.getDeclaredConstructor().newInstance();
+
+		int numeroArgumentos = metodo.getParameterCount();
+
+		resultado = switch (numeroArgumentos) {
+		case 2 -> metodo.invoke(controlador, entrada, salida);
+		case 1 -> metodo.invoke(controlador, salida);
+		case 0 -> metodo.invoke(controlador);
+		default -> throw new IllegalArgumentException("No soportamos " + numeroArgumentos + " argumentos");
+		};
+		return resultado;
+	}
+
+	private void crearAtributos(HttpServletRequest request, Map<String, Object> salida) {
+		for (Entry<String, Object> par : salida.entrySet()) {
+			if ("sesion".equals(par.getKey()) && "invalidar".equals(par.getValue())) {
+				request.getSession().invalidate();
+			} else if(par.getKey().startsWith("sesion.")) {
+				request.getSession().setAttribute(par.getKey().replace("sesion.", ""), par.getValue());
+			} else {
+				request.setAttribute(par.getKey(), par.getValue());
+			}
+		}
+	}
+
+	private Map<String, String> recogerParametros(HttpServletRequest request) {
+		Map<String, String> entrada;
+		entrada = new HashMap<>();
+
+		Enumeration<String> parametros = request.getParameterNames();
+
+		while (parametros.hasMoreElements()) {
+			String parametro = parametros.nextElement();
+			String valor = request.getParameter(parametro);
+
+			entrada.put(parametro, valor);
+		}
+		return entrada;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
