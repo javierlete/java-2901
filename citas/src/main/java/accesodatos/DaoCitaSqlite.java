@@ -2,6 +2,7 @@ package accesodatos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 import bibliotecas.accesodatos.DaoJdbc;
@@ -23,13 +24,13 @@ public class DaoCitaSqlite implements DaoCita {
 
 	@Override
 	public Cita insertar(Cita cita) {
-		dao.ejecutarCambio("INSERT INTO citas (texto, inicio, fin) VALUES (?,?,?)", cita.getTexto(), cita.getInicio(), cita.getFin());
+		dao.ejecutarCambio("INSERT INTO citas (texto, inicio, fin) VALUES (?,?,?)", cita.getTexto(), Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()));
 		return cita;
 	}
 
 	@Override
 	public Cita modificar(Cita cita) {
-		dao.ejecutarCambio("UPDATE citas SET texto=?, inicio=?, fin=? WHERE id=?", cita.getTexto(), cita.getInicio(), cita.getFin(), cita.getId());
+		dao.ejecutarCambio("UPDATE citas SET texto=?, inicio=?, fin=? WHERE id=?", cita.getTexto(), Timestamp.valueOf(cita.getInicio()), Timestamp.valueOf(cita.getFin()), cita.getId());
 		return cita;
 	}
 
