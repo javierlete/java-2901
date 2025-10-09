@@ -8,6 +8,7 @@ import bibliotecas.accesodatos.DaoJdbc;
 import modelos.Cita;
 
 public class DaoCitaSqlite implements DaoCita {
+	// TODO Usar fábrica para la instanciación del DaoJdbc
 	private DaoJdbc<Cita> dao = new DaoJdbc<>("jdbc:sqlite:bdd/citas.db", "", "", "org.sqlite.JDBC");
 
 	@Override

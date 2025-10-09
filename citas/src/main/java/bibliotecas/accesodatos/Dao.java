@@ -6,7 +6,7 @@ public interface Dao<T> {
 	Iterable<T> obtenerTodos();
 	Optional<T> obtenerPorId(Long id);
 	
-	T insertar(T cita);
-	T modificar(T cita);
+	T insertar(T objeto);
+	T modificar(T objeto);
 	void borrar(Long id);
 }
