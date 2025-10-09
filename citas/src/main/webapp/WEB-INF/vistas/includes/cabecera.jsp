@@ -31,11 +31,11 @@
 				</ul>
 				<ul class="navbar-nav mb-2 mb-lg-0">
 					<c:choose>
-						<c:when test="${sessionScope.email == null}">
+						<c:when test="${sessionScope.usuario == null}">
 							<li class="nav-item"><a class="nav-link" href="login">Iniciar sesión</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="navbar-text">${sessionScope.email}</li>
+							<li class="navbar-text">${sessionScope.usuario.nombre}</li>
 							<li class="nav-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
 						</c:otherwise>
 					</c:choose>

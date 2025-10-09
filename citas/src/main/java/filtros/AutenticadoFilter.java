@@ -1,4 +1,4 @@
-package bibliotecas.filtros;
+package filtros;
 
 import java.io.IOException;
 
@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import modelos.Usuario;
 
 @WebFilter({"/cf/citas", "/cf/detalle"})
 public class AutenticadoFilter implements Filter {
@@ -24,9 +25,9 @@ public class AutenticadoFilter implements Filter {
 		
 		HttpSession session = req.getSession();
 		
-		String email = (String) session.getAttribute("email");
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		
-		if(email == null) {
+		if(usuario == null) {
 			res.sendRedirect("login");
 			return;
 		}

@@ -66,7 +66,7 @@ public class ControladorFrontal extends HttpServlet {
 			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
 			IOException, ServletException {
 		// Extraer información de la petición
-		Map<String, String> entrada = recogerParametros(request);
+		Map<String, Object> entrada = recogerParametros(request);
 
 		log.log(Level.INFO, "ENTRADA: {0}", entrada);
 
@@ -102,7 +102,7 @@ public class ControladorFrontal extends HttpServlet {
 		}
 	}
 
-	private Object invocarMetodo(Class<?> clase, Method metodo, Map<String, String> entrada, Map<String, Object> salida)
+	private Object invocarMetodo(Class<?> clase, Method metodo, Map<String, Object> entrada, Map<String, Object> salida)
 			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		Object resultado;
 		Object controlador = clase.getDeclaredConstructor().newInstance();
@@ -130,8 +130,8 @@ public class ControladorFrontal extends HttpServlet {
 		}
 	}
 
-	private Map<String, String> recogerParametros(HttpServletRequest request) {
-		Map<String, String> entrada;
+	private Map<String, Object> recogerParametros(HttpServletRequest request) {
+		Map<String, Object> entrada;
 		entrada = new HashMap<>();
 
 		Enumeration<String> parametros = request.getParameterNames();
@@ -147,7 +147,7 @@ public class ControladorFrontal extends HttpServlet {
 
 		while (atributos.hasMoreElements()) {
 			String atributo = atributos.nextElement();
-			String valor = (String) request.getSession().getAttribute(atributo);
+			Object valor = request.getSession().getAttribute(atributo);
 
 			entrada.put("sesion." + atributo, valor);
 		}
