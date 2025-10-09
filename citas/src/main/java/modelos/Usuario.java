@@ -7,13 +7,15 @@ public class Usuario {
 	private String email;
 	private String password;
 	private String nombre;
+	private Rol rol;
 
-	public Usuario(Long id, String email, String password, String nombre) {
+	public Usuario(Long id, String email, String password, String nombre, Rol rol) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.nombre = nombre;
+		this.rol = rol;
 	}
 
 	public Long getId() {
@@ -48,9 +50,17 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, nombre, password);
+		return Objects.hash(email, id, nombre, password, rol);
 	}
 
 	@Override
@@ -63,12 +73,14 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
-				&& Objects.equals(nombre, other.nombre) && Objects.equals(password, other.password);
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(password, other.password)
+				&& Objects.equals(rol, other.rol);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Usuario [id=%s, email=%s, password=%s, nombre=%s]", id, email, password, nombre);
+		return String.format("Usuario [id=%s, email=%s, password=%s, nombre=%s, rol=%s]", id, email, password, nombre,
+				rol);
 	}
 
 }

@@ -7,8 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DaoJdbc<T> {
+	private static final Logger log = Logger.getLogger(DaoJdbc.class.getName());
+	
 	private String url;
 	private String user;
 	private String pass;
@@ -40,12 +44,16 @@ public class DaoJdbc<T> {
 	}
 
 	public Iterable<T> ejecutarConsulta(String sql, Mapeador<T> mapeador, Object... args) {
+		log.log(Level.FINE, sql);
+		
 		try (Connection con = DriverManager.getConnection(url, user, pass);
 				PreparedStatement pst = con.prepareStatement(sql);) {
 
 			int i = 1;
 
 			for (var arg : args) {
+				log.log(Level.FINER, arg.toString());
+				
 				pst.setObject(i++, arg);
 			}
 

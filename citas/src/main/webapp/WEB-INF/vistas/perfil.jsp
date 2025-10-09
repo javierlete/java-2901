@@ -3,5 +3,6 @@
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
 <h1 class="text-center">${sessionScope.usuario.email}</h1>
+<h1 class="text-center">${sessionScope.usuario.rol.nombre}</h1>
 
 <%@ include file="/WEB-INF/vistas/includes/pie.jsp"%>

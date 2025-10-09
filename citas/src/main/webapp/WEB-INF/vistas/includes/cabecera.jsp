@@ -35,7 +35,7 @@
 							<li class="nav-item"><a class="nav-link" href="login">Iniciar sesión</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="navbar-text">${sessionScope.usuario.nombre}</li>
+							<li class="navbar-text">${sessionScope.usuario.nombre} (${sessionScope.usuario.rol.nombre})</li>
 							<li class="nav-item"><a class="nav-link" href="logout">Cerrar sesión</a></li>
 						</c:otherwise>
 					</c:choose>
