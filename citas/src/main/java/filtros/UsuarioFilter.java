@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import modelos.Rol;
 import modelos.Usuario;
 
 @WebFilter({ "/cf/citas", "/cf/detalle" })
@@ -28,18 +27,11 @@ public class UsuarioFilter implements Filter {
 
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-		if (usuario == null) {
-			res.sendRedirect("login");
+		if (usuario == null || !"USUARIO".equals(usuario.getRol().getNombre()) && !"ADMINISTRADOR".equals(usuario.getRol().getNombre())) {
+			res.sendRedirect(req.getContextPath() + "/cf/login");
 			return;
 		}
 		
-		Rol rol = usuario.getRol();
-		
-		if(rol == null || !"USUARIO".equals(rol.getNombre()) && !"ADMINISTRADOR".equals(rol.getNombre())) {
-			res.sendRedirect("login");
-			return;
-		}
-
 		chain.doFilter(request, response);
 	}
 
