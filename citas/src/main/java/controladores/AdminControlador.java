@@ -3,19 +3,19 @@ package controladores;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import accesodatos.DaoCita;
 import bibliotecas.Fabrica;
 import bibliotecas.controladores.Controlador;
 import bibliotecas.controladores.Ruta;
+import logicanegocio.AdminNegocio;
 import modelos.Cita;
 
 @Controlador
 public class AdminControlador {
-	private static final DaoCita dao = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
-
+	private static final AdminNegocio ADMIN_NEGOCIO = (AdminNegocio) Fabrica.obtenerObjeto("negocio.admin");
+	
 	@Ruta("/admin/listado")
 	public String listado(Map<String, Object> salida) {
-		salida.put("citas", dao.obtenerTodos());
+		salida.put("citas", ADMIN_NEGOCIO.listadoCitas());
 		return "admin/listado";
 	}
 
@@ -26,7 +26,7 @@ public class AdminControlador {
 		if (sId != null) {
 			Long id = Long.parseLong(sId);
 
-			var cita = dao.obtenerPorId(id).orElse(null);
+			var cita = ADMIN_NEGOCIO.detalleCita(id).orElse(null);
 
 			salida.put("cita", cita);
 		}
@@ -39,7 +39,7 @@ public class AdminControlador {
 		String sId = entrada.get("id");
 		Long id = Long.parseLong(sId);
 
-		dao.borrar(id);
+		ADMIN_NEGOCIO.bajaCita(id);
 
 		return "redirect:/cf/admin/listado";
 	}
@@ -55,7 +55,7 @@ public class AdminControlador {
 
 		var cita = new Cita(null, texto, inicio, fin);
 
-		dao.insertar(cita);
+		ADMIN_NEGOCIO.altaCita(cita);		
 
 		return "redirect:/cf/admin/listado";
 	}

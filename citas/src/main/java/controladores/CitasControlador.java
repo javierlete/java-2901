@@ -3,22 +3,21 @@ package controladores;
 import java.util.Map;
 import java.util.Optional;
 
-import accesodatos.DaoCita;
-import accesodatos.DaoUsuario;
 import bibliotecas.Fabrica;
 import bibliotecas.controladores.Controlador;
 import bibliotecas.controladores.Ruta;
+import logicanegocio.AnonimoNegocio;
+import logicanegocio.UsuarioNegocio;
 import modelos.Cita;
-import modelos.Usuario;
 
 @Controlador
 public class CitasControlador {
-	private DaoCita daoCita = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
-	private DaoUsuario daoUsuario = (DaoUsuario) Fabrica.obtenerObjeto("dao.usuario");
-
+	private static final AnonimoNegocio anonimoNegocio = (AnonimoNegocio) Fabrica.obtenerObjeto("negocio.anonimo");
+	private static final UsuarioNegocio usuarioNegocio = (UsuarioNegocio) Fabrica.obtenerObjeto("negocio.usuario");
+	
 	@Ruta("/citas")
 	public String citas(Map<String, Object> salida) {
-		salida.put("citas", daoCita.obtenerTodos());
+		salida.put("citas", usuarioNegocio.listadoCitas());
 		return "citas";
 	}
 
@@ -28,7 +27,7 @@ public class CitasControlador {
 
 		long id = Long.parseLong(sId);
 
-		Optional<Cita> cita = daoCita.obtenerPorId(id);
+		Optional<Cita> cita = usuarioNegocio.detalleCita(id);
 
 		salida.put("cita", cita.orElse(null));
 
@@ -45,7 +44,7 @@ public class CitasControlador {
 		String email = entrada.get("email");
 		String password = entrada.get("password");
 
-		var autenticado = autenticar(email, password);
+		var autenticado = anonimoNegocio.autenticar(email, password);
 		
 		if (autenticado.isPresent()) {
 			salida.put("sesion.usuario", autenticado.get());
@@ -57,16 +56,6 @@ public class CitasControlador {
 
 			return "login";
 		}
-	}
-
-	private Optional<Usuario> autenticar(String email, String password) {
-		Optional<Usuario> usuario = daoUsuario.obtenerPorEmail(email);
-		
-		if(usuario.isPresent() && usuario.get().getPassword().equals(password)) {
-			return usuario;
-		}
-		
-		return Optional.empty();
 	}
 
 	@Ruta("/logout")
