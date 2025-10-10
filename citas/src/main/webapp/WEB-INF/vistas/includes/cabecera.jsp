@@ -30,6 +30,9 @@
 					<li class="nav-item"><a class="nav-link" href="citas">Principal</a></li>
 				</ul>
 				<ul class="navbar-nav mb-2 mb-lg-0">
+					<c:if test="${sessionScope.usuario.rol.nombre == 'ADMINISTRADOR'}">
+						<li class="nav-item"><a class="nav-link" href="admin/listado">Administración</a></li>
+					</c:if>
 					<c:choose>
 						<c:when test="${sessionScope.usuario == null}">
 							<li class="nav-item"><a class="nav-link" href="login">Iniciar sesión</a></li>
