@@ -12,7 +12,7 @@ import modelos.Cita;
 @Controlador
 public class AdminControlador {
 	private static final AdminNegocio ADMIN_NEGOCIO = (AdminNegocio) Fabrica.obtenerObjeto("negocio.admin");
-	
+
 	@Ruta("/admin/listado")
 	public String listado(Map<String, Object> salida) {
 		salida.put("citas", ADMIN_NEGOCIO.listadoCitas());
@@ -30,7 +30,7 @@ public class AdminControlador {
 
 			salida.put("cita", cita);
 		}
-		
+
 		return "admin/formulario";
 	}
 
@@ -46,16 +46,22 @@ public class AdminControlador {
 
 	@Ruta("/admin/guardar")
 	public String guardar(Map<String, String> entrada, Map<String, Object> salida) {
+		String sId = entrada.get("id");
 		String texto = entrada.get("texto");
 		String sInicio = entrada.get("inicio") + ":00";
 		String sFin = entrada.get("fin") + ":00";
 
+		Long id = sId.isBlank() ? null : Long.parseLong(sId);
 		LocalDateTime inicio = LocalDateTime.parse(sInicio);
 		LocalDateTime fin = LocalDateTime.parse(sFin);
 
-		var cita = new Cita(null, texto, inicio, fin);
+		var cita = new Cita(id, texto, inicio, fin);
 
-		ADMIN_NEGOCIO.altaCita(cita);		
+		if (cita.getId() == null) {
+			ADMIN_NEGOCIO.altaCita(cita);
+		} else {
+			ADMIN_NEGOCIO.modificarCita(cita);
+		}
 
 		return "redirect:/cf/admin/listado";
 	}

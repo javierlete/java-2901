@@ -14,6 +14,7 @@
 <p>${cita}</p>
 
 <form action="admin/guardar" method="post">
+	<input type="hidden" name="id" value="${cita.id}">
 	<div class="row mb-3">
 		<label for="texto" class="col-sm-2 col-form-label">Texto</label>
 		<div class="col-sm-10">
