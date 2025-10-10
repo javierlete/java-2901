@@ -48,14 +48,19 @@ public class AdminControlador {
 	public String guardar(Map<String, String> entrada, Map<String, Object> salida) {
 		String sId = entrada.get("id");
 		String texto = entrada.get("texto");
-		String sInicio = entrada.get("inicio") + ":00";
-		String sFin = entrada.get("fin") + ":00";
+		String sInicio = entrada.get("inicio");
+		String sFin = entrada.get("fin");
 
 		Long id = sId.isBlank() ? null : Long.parseLong(sId);
-		LocalDateTime inicio = LocalDateTime.parse(sInicio);
-		LocalDateTime fin = LocalDateTime.parse(sFin);
+		LocalDateTime inicio = sInicio.isBlank() ? null : LocalDateTime.parse(sInicio + ":00");
+		LocalDateTime fin = sFin.isBlank() ? null : LocalDateTime.parse(sFin + ":00");
 
 		var cita = new Cita(id, texto, inicio, fin);
+
+		if (cita.tieneErrores()) {
+			salida.put("cita", cita);
+			return "admin/formulario";
+		}
 
 		if (cita.getId() == null) {
 			ADMIN_NEGOCIO.altaCita(cita);

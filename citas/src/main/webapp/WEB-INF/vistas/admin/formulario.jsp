@@ -12,6 +12,7 @@
 </c:if>
 
 <p>${cita}</p>
+<p>${cita.errores}</p>
 
 <form action="admin/guardar" method="post">
 	<input type="hidden" name="id" value="${cita.id}">
