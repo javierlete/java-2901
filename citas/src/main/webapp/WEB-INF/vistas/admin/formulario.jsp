@@ -19,21 +19,21 @@
 	<div class="row mb-3">
 		<label for="texto" class="col-sm-2 col-form-label">Texto</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" id="texto" name="texto"
+			<input type="text" required class="form-control" id="texto" name="texto"
 				value="${cita.texto}">
 		</div>
 	</div>
 	<div class="row mb-3">
 		<label for="inicio" class="col-sm-2 col-form-label">Fecha inicio</label>
 		<div class="col-sm-10">
-			<input type="datetime-local" class="form-control" id="inicio" name="inicio"
+			<input type="datetime-local" required class="form-control" id="inicio" name="inicio"
 				value="${cita.inicio}">
 		</div>
 	</div>
 	<div class="row mb-3">
 		<label for="fin" class="col-sm-2 col-form-label">Fecha fin</label>
 		<div class="col-sm-10">
-			<input type="datetime-local" class="form-control" id="fin" name="fin"
+			<input type="datetime-local" required class="form-control" id="fin" name="fin"
 				value="${cita.fin}">
 		</div>
 	</div>
