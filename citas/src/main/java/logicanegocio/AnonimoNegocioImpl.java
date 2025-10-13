@@ -2,15 +2,14 @@ package logicanegocio;
 
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import accesodatos.DaoUsuario;
 import bibliotecas.Fabrica;
+import lombok.extern.java.Log;
 import modelos.Usuario;
 
+@Log
 public class AnonimoNegocioImpl implements AnonimoNegocio {
-	private static final Logger log = Logger.getLogger(AnonimoNegocioImpl.class.getName());
-	
 	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.obtenerObjeto("dao.usuario");
 	
 	@Override
