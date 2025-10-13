@@ -10,6 +10,10 @@
 	<description>En esta aplicación se demuestra el uso de MVC entre muchas
 		otras cosas.</description>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
