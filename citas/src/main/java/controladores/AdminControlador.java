@@ -6,6 +6,9 @@ import java.util.Map;
 import bibliotecas.Fabrica;
 import bibliotecas.controladores.Controlador;
 import bibliotecas.controladores.Ruta;
+import bibliotecas.validaciones.Errores;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
 import logicanegocio.AdminNegocio;
 import modelos.Cita;
 
@@ -13,6 +16,8 @@ import modelos.Cita;
 public class AdminControlador {
 	private static final AdminNegocio ADMIN_NEGOCIO = (AdminNegocio) Fabrica.obtenerObjeto("negocio.admin");
 
+	private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	
 	@Ruta("/admin/listado")
 	public String listado(Map<String, Object> salida) {
 		salida.put("citas", ADMIN_NEGOCIO.listadoCitas());
@@ -57,8 +62,11 @@ public class AdminControlador {
 
 		var cita = new Cita(id, texto, inicio, fin);
 
-		if (cita.tieneErrores()) {
+		var constraintViolations = factory.getValidator().validate(cita);
+		
+		if (!constraintViolations.isEmpty()) {
 			salida.put("cita", cita);
+			salida.put("errores", Errores.constraintViolationsAErrores(constraintViolations));
 			return "admin/formulario";
 		}
 

@@ -11,44 +11,46 @@
 	</div>
 </c:if>
 
-<%-- <p>${cita}</p> --%>
-<!-- <p>${cita.errores}</p> -->
-
-<form action="admin/guardar" method="post" class="needs-validation" novalidate>
+<form action="admin/guardar" method="post" class="needs-validationn"
+	novalidate>
 	<input type="hidden" name="id" value="${cita.id}">
 	<div class="row mb-3">
 		<label for="texto" class="col-sm-2 col-form-label">Texto</label>
 		<div class="col-sm-10">
-			<input type="text" required class="form-control" id="texto" name="texto"
-				value="${cita.texto}">
-			<div class="invalid-feedback">
-				No se permiten textos vacíos
+			<input type="text" required
+				class="form-control ${errores.texto != null ? 'is-invalid' : '' }"
+				id="texto" name="texto" value="${cita.texto}">
+			<div class="invalid-feedback">${errores.texto != null ? errores.texto : 'No se permiten textos vacíos'}
 			</div>
 		</div>
 	</div>
 	<div class="row mb-3">
-		<label for="inicio" class="col-sm-2 col-form-label">Fecha inicio</label>
+		<label for="inicio" class="col-sm-2 col-form-label">Fecha
+			inicio</label>
 		<div class="col-sm-10">
-			<input type="datetime-local" required class="form-control" id="inicio" name="inicio"
-				value="${cita.inicio}">
-			<div class="invalid-feedback">
-				No se permiten fechas de inicio vacías
+			<input type="datetime-local" required
+				class="form-control ${errores.inicio != null ? 'is-invalid': '' }"
+				id="inicio" name="inicio" value="${cita.inicio}">
+			<div class="invalid-feedback">${errores.inicio != null ? errores.inicio : 'No se permiten fechas de inicio vacías' }
 			</div>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<label for="fin" class="col-sm-2 col-form-label">Fecha fin</label>
 		<div class="col-sm-10">
-			<input type="datetime-local" required class="form-control ${cita.errores.fin != null ? 'is-invalid' : '' }" id="fin" name="fin"
-				value="${cita.fin}">
-			<div class="invalid-feedback">
-				${cita.errores.fin != null ? cita.errores.fin : 'No se permiten fechas de fin vacías'}
+			<input type="datetime-local" required
+				class="form-control ${errores.fin != null ? 'is-invalid' : '' }"
+				id="fin" name="fin" value="${cita.fin}">
+			<div class="invalid-feedback">${errores.fin != null ? errores.fin : 'No se permiten fechas de fin vacías' }
 			</div>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="offset-sm-2 col-sm-10">
 			<button type="submit" class="btn btn-primary">Guardar</button>
+			<div class="text-danger">
+				${errores['']}
+			</div>
 		</div>
 	</div>
 
