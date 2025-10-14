@@ -3,6 +3,11 @@ package modelos;
 import java.time.LocalDateTime;
 
 import bibliotecas.validaciones.FechaPosterior;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,9 +21,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 
+@Entity
+@Table(name = "citas")
+
 @FechaPosterior(fechaInicio = "inicio", fechaFin = "fin",
 message = "La fecha de fin debe ser posterior a la fecha de inicio")
 public class Cita {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
