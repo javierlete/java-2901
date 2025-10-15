@@ -1,96 +1,44 @@
 package accesodatos;
 
+import static bibliotecas.accesodatos.DaoJpa.*;
+
 import java.util.Optional;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 import modelos.Rol;
 
 public class DaoRolJpa implements DaoRol {
-	private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("modelos");
-
+	
 	@Override
 	public Iterable<Rol> obtenerTodos() {
-		Iterable<Rol> roles = null;
-
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		roles = em.createQuery("from Rol", Rol.class).getResultList();
-
-		t.commit();
-
-		em.close();
-
-		return roles;
+		return ejecutarJpa((em, args) -> em.createQuery("from Rol", Rol.class).getResultList());
 	}
 
 	@Override
 	public Optional<Rol> obtenerPorId(Long id) {
-		Optional<Rol> rol = Optional.empty();
-
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		rol = Optional.ofNullable(em.find(Rol.class, id));
-
-		t.commit();
-
-		em.close();
-
-		return rol;
+		return ejecutarJpa((em, args) -> Optional.ofNullable(em.find(Rol.class, id)), id);
 	}
 
 	@Override
 	public Rol insertar(Rol rol) {
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		
-		t.begin();
-		
-		em.persist(rol);
-		
-		t.commit();
-		
-		em.close();
-		
-		return rol;
+		return (Rol) ejecutarJpa((em, args) -> {
+			em.persist(args[0]);
+			return args[0];
+		}, rol);
 	}
 
 	@Override
 	public Rol modificar(Rol rol) {
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		
-		t.begin();
-		
-		em.merge(rol);
-		
-		t.commit();
-		
-		em.close();
-		
-		return rol;
+		return (Rol) ejecutarJpa((em, args) -> {
+			em.merge(args[0]);
+			return args[0];
+		}, rol);
 	}
 
 	@Override
 	public void borrar(Long id) {
-		EntityManager em = factory.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		
-		t.begin();
-		
-		em.remove(em.find(Rol.class, id));
-		
-		t.commit();
-		
-		em.close();
+		ejecutarJpa((em, args) -> {
+			em.remove(em.find(Rol.class, args[0]));
+			return null;
+		}, id);
 	}
-
 }
