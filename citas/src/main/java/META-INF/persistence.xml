@@ -4,7 +4,9 @@
              version="2.0">
 
     <persistence-unit name="modelos">   
-        <class>modelos.Rol</class>     
+        <class>modelos.Cita</class>     
+        <class>modelos.Rol</class>
+        <class>modelos.Usuario</class>
 
         <properties>    
             <!-- Database connection settings -->
@@ -13,7 +15,7 @@
             <property name="jakarta.persistence.jdbc.password" value="" />
 
             <!-- Automatically export the schema -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+            <property name="jakarta.persistence.schema-generation.database.action" value="create-drop" />
 
             <!-- Echo all executed SQL to console -->
             <property name="hibernate.show_sql" value="true" />
