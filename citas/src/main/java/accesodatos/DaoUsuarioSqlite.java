@@ -48,7 +48,7 @@ public class DaoUsuarioSqlite implements DaoUsuario {
 	}
 
 	private static Usuario mapeador(ResultSet rs) throws SQLException {
-		Rol rol = new Rol(rs.getLong("rol_id"), rs.getString("rol_nombre"), rs.getString("rol_descripcion"));
+		Rol rol = Rol.builder().id(rs.getLong("rol_id")).nombre(rs.getString("rol_nombre")).descripcion(rs.getString("rol_descripcion")).build();
 		return new Usuario(rs.getLong("id"), rs.getString("email"), rs.getString("password"), rs.getString("nombre"),
 				rol);
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,11 +15,13 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 
 @Entity
@@ -26,16 +29,18 @@ import lombok.RequiredArgsConstructor;
 public class Rol {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private final Long id;
+	private Long id;
 	
 	@NotBlank
 	@Size(min = 3, max = 20)
-	private final String nombre;
+	private String nombre;
 	
 	@Size(max = 2000)
-	private final String descripcion;
+	private String descripcion;
 	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@Builder.Default
-	@OneToMany(mappedBy = "rol")
+	@OneToMany(mappedBy = "rol", fetch = FetchType.EAGER)
 	private List<Usuario> usuarios = new ArrayList<>();
 }

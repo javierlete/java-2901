@@ -6,7 +6,7 @@ import accesodatos.DaoCita;
 import bibliotecas.Fabrica;
 import modelos.Cita;
 
-public class DaoJpaPrueba {
+public class DaoCitaJpaPrueba {
 	public static void main(String[] args) {
 		DaoCita dao = (DaoCita) Fabrica.obtenerObjeto("dao.cita");
 
