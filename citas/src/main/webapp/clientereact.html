@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React con script</title>
+    <!-- React y ReactDOM desde un CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para poder usar JSX directamente en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- Contenedor donde React montará el componente -->
+    <div id="root"></div>
+
+    <!-- Tu código React con JSX -->
+    <script type="text/babel" src="js/clientereact.js"></script>
+  </body>
+</html>
