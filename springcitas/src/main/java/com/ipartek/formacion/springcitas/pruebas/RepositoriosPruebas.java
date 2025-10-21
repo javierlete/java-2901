@@ -1,11 +1,17 @@
 package com.ipartek.formacion.springcitas.pruebas;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.ipartek.formacion.springcitas.entidades.Cita;
 import com.ipartek.formacion.springcitas.entidades.Rol;
 import com.ipartek.formacion.springcitas.entidades.Usuario;
+import com.ipartek.formacion.springcitas.repositorios.CitaRepository;
 import com.ipartek.formacion.springcitas.repositorios.RolRepository;
 import com.ipartek.formacion.springcitas.repositorios.UsuarioRepository;
 
@@ -16,6 +22,9 @@ public class RepositoriosPruebas implements CommandLineRunner {
 
 	@Autowired
 	private RolRepository rolRepository;
+
+	@Autowired
+	private CitaRepository citaRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -38,6 +47,27 @@ public class RepositoriosPruebas implements CommandLineRunner {
 
 		usuarioRepository.findByEmail("pepe@email.net").ifPresentOrElse(System.out::println,
 				() -> System.out.println("No se ha encontrado"));
+
+		for (int i = 0; i < 5; i++) {
+			citaRepository
+					.save(Cita.builder().texto("Cita " + i).inicio(LocalDateTime.of(2025, 10, 20, 8, 15).plusDays(i))
+							.fin(LocalDateTime.of(2025, 10, 20, 13, 45).plusDays(i)).build());
+		}
+
+		Page<Cita> pagina;
+		Pageable pageable = Pageable.ofSize(2);
+		
+		int numeroPagina = 0;
+		
+		do {
+			pagina = citaRepository.findByInicioBetween(pageable.withPage(numeroPagina++), LocalDateTime.of(2025, 10, 21, 0, 0),
+					LocalDateTime.of(2025, 10, 23, 23, 59));
+			
+			System.out.println(pagina.getNumber() + 1);
+
+			pagina.stream().forEach(System.out::println);
+		} while(pagina.hasNext());
+
 	}
 
 }
