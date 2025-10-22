@@ -13,7 +13,7 @@ import com.ipartek.formacion.springcitas.entidades.Usuario;
 import com.ipartek.formacion.springcitas.servicios.AnonimoService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 public class AnonimoRestController {
 	@Autowired
 	private AnonimoService anonimoService;
