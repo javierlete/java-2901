@@ -1,5 +1,6 @@
 package com.ipartek.formacion.springcitas.repositorios;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -13,7 +14,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 	Optional<Usuario> findByEmail(String email);
 
 	@EntityGraph(attributePaths = "rol")
-	Iterable<Usuario> findAll();
+	Collection<Usuario> findAll();
 	
 //	@Query("select new com.ipartek.formacion.springcitas.dtos.UsuarioRolDto(u.id, u.nombre, u.email, r.id, r.nombre) from Usuario u left join u.rol r")
 //	List<UsuarioRolDto> usuariosConRoles();
