@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import com.ipartek.formacion.springcitas.repositorios.CitaRepository;
 import com.ipartek.formacion.springcitas.repositorios.RolRepository;
 import com.ipartek.formacion.springcitas.repositorios.UsuarioRepository;
 
+@Order(1)
 @Component
 public class RepositoriosPruebas implements CommandLineRunner {
 	@Autowired
