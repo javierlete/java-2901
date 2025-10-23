@@ -2,6 +2,9 @@ package com.ipartek.formacion.springcitas.entidades;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.ipartek.formacion.bibliotecas.FechaPosterior;
 
 import jakarta.persistence.Entity;
@@ -37,8 +40,10 @@ public class Cita {
 	private String texto;
 	
 	@NotNull
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime inicio;
 	
 	@NotNull
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime fin;
 }

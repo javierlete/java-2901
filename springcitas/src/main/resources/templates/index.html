@@ -11,8 +11,13 @@
 <ul>
 	<li th:each="cita: ${citas}">
 		<a href="detalle.html" th:href="@{/detalle/{id}(id=${cita.id})}" th:text="${cita.texto}">Cita</a>
+		<a href="formulario.html" th:href="@{/formulario/{id}(id=${cita.id})}">[Editar]</a>
 	</li>
 </ul>
+
+<p>
+	<a href="formulario.html" th:href="@{/formulario}">Añadir</a>
+</p>
 
 </body>
 </html>
