@@ -3,17 +3,29 @@
 	xmlns:th="https://thymeleaf.org">
 <title>Citas: listado</title>
 
-<main>
-	<ul>
-		<li th:each="cita: ${citas}"><a href="detalle.html"
-			th:href="@{/detalle/{id}(id=${cita.id})}" th:text="${cita.texto}">Cita</a>
-			<a href="formulario.html"
-			th:href="@{/formulario/{id}(id=${cita.id})}">[Editar]</a></li>
-	</ul>
+<main class="d-flex justify-content-center">
+	<ul class="list-group" style="max-width: 40rem;">
+		<li th:each="cita: ${citas}"
+			class="list-group-item list-group-item-action">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1 me-3">
+					<a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="detalle.html" th:href="@{/detalle/{id}(id=${cita.id})}"
+						th:text="${cita.texto}">Cita</a>
+				</h5>
+				<small> <a class="btn btn-primary" href="formulario.html"
+					th:href="@{/formulario/{id}(id=${cita.id})}">Editar</a>
+				</small>
+			</div>
+		</li>
 
-	<p>
-		<a href="formulario.html" th:href="@{/formulario}">Añadir</a>
-	</p>
+		<li class="list-group-item list-group-item-action">
+			<div class="d-flex w-100 justify-content-end">
+				<small> <a class="btn btn-primary" href="formulario.html"
+					th:href="@{/formulario}">Añadir</a>
+				</small>
+			</div>
+		</li>
+	</ul>
 </main>
 
 </html>

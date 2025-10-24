@@ -3,28 +3,52 @@
 	xmlns:th="https://thymeleaf.org">
 <title>Citas: formulario</title>
 
-<main>
-	<p th:text="${cita}">DEPURACIÓN</p>
-
+<main class="d-flex justify-content-center">
 	<form action="index.html" th:action="@{/formulario}" method="post"
-		th:object="${cita}">
-		<input readonly th:field="*{id}"> <input th:field="*{texto}"
-			placeholder="Texto">
-		<p th:errors="*{texto}">Error texto</p>
-		<input th:field="*{inicio}" placeholder="Inicio" type="datetime-local">
-		<p th:errors="*{inicio}">Error inicio</p>
-		<input th:field="*{fin}" placeholder="Fin" type="datetime-local">
-		<p th:errors="*{fin}">Error fin</p>
+		th:object="${cita}" style="max-width: 40rem">
+		<fieldset>
+			<legend>Cita</legend>
 
-		<button>Guardar</button>
-		<div th:if="${#fields.hasGlobalErrors()}">
-			<ul>
-				<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
-			</ul>
-		</div>
+			<input type="hidden" th:field="*{id}">
 
+			<div class="row mb-3">
+				<label for="texto" class="col-sm-2 col-form-label">Texto</label>
+				<div class="col-sm-10">
+					<input th:field="*{texto}" type="text" class="form-control"
+						th:classappend="${#fields.hasErrors('texto')} ? 'is-invalid'">
+					<div th:errors="*{texto}" class="invalid-feedback"></div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label for="inicio" class="col-sm-2 col-form-label">Inicio</label>
+				<div class="col-sm-10">
+					<input th:field="*{inicio}" type="datetime-local"
+						class="form-control"
+						th:classappend="${#fields.hasErrors('inicio')} ? 'is-invalid'">
+					<div th:errors="*{inicio}" class="invalid-feedback"></div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label for="fin" class="col-sm-2 col-form-label">Fin</label>
+				<div class="col-sm-10">
+					<input th:field="*{fin}" type="datetime-local" class="form-control"
+						th:classappend="${#fields.hasErrors('fin')} ? 'is-invalid'">
+					<div th:errors="*{fin}" class="invalid-feedback"></div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="offset-sm-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+					<div th:if="${#fields.hasGlobalErrors()}">
+						<ul>
+							<li class="text-danger" th:each="err : ${#fields.globalErrors()}"
+								th:text="${err}"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</fieldset>
 	</form>
 
-	<script src="http://localhost:35729/livereload.js"></script>
 </main>
 </html>

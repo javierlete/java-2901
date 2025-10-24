@@ -2,16 +2,20 @@
 <html th:replace="~{_global :: global(~{::title}, ~{::main})}"
 	xmlns:th="https://thymeleaf.org">
 <title>Citas: detalle</title>
-<main>
+<main class="d-flex justify-content-center text-center">
 
-	<p style="font-weight: bold" th:text="${cita?.texto}">Texto</p>
-	<p>
-		Inicio: <span
-			th:text="${#temporals.format(cita?.inicio, 'dd/MMM/yyyy HH:mm')}">Inicio</span>
-	</p>
-	<p>
-		Fin: <span
-			th:text="${#temporals.format(cita?.fin, 'dd/MMM/yyyy HH:mm')}">Fin</span>
-	</p>
+	<div class="card" style="max-width: 18rem;">
+		<div class="card-body">
+			<h5 class="card-title" th:text="${cita?.texto}">Card title</h5>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item" th:text="${#temporals.format(cita?.inicio, 'dd/MMM/yyyy HH:mm')}">An item</li>
+			<li class="list-group-item" th:text="${#temporals.format(cita?.fin, 'dd/MMM/yyyy HH:mm')}">A second item</li>
+		</ul>
+		<div class="card-body">
+			<a href="index.html" th:href="@{/}" class="card-link">Volver</a>
+		</div>
+	</div>
+	
 </main>
 </html>
