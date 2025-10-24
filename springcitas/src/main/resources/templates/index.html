@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Citas</title>
-</head>
-<body>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>Citas: listado</title>
 
-<h1>Citas</h1>
+<main>
+	<ul>
+		<li th:each="cita: ${citas}"><a href="detalle.html"
+			th:href="@{/detalle/{id}(id=${cita.id})}" th:text="${cita.texto}">Cita</a>
+			<a href="formulario.html"
+			th:href="@{/formulario/{id}(id=${cita.id})}">[Editar]</a></li>
+	</ul>
 
-<ul>
-	<li th:each="cita: ${citas}">
-		<a href="detalle.html" th:href="@{/detalle/{id}(id=${cita.id})}" th:text="${cita.texto}">Cita</a>
-		<a href="formulario.html" th:href="@{/formulario/{id}(id=${cita.id})}">[Editar]</a>
-	</li>
-</ul>
+	<p>
+		<a href="formulario.html" th:href="@{/formulario}">Añadir</a>
+	</p>
+</main>
 
-<p>
-	<a href="formulario.html" th:href="@{/formulario}">Añadir</a>
-</p>
-
-</body>
 </html>

@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Citas</title>
-</head>
-<body>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>Citas: formulario</title>
 
-	<h1>Citas</h1>
-
+<main>
 	<p th:text="${cita}">DEPURACIÓN</p>
 
 	<form action="index.html" th:action="@{/formulario}" method="post"
@@ -30,5 +26,5 @@
 	</form>
 
 	<script src="http://localhost:35729/livereload.js"></script>
-</body>
+</main>
 </html>
