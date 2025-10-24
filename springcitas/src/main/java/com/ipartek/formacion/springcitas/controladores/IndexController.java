@@ -35,7 +35,7 @@ public class IndexController {
 
 	@GetMapping("detalle/{id}")
 	public String detalle(Model modelo, @PathVariable Long id) {
-		modelo.addAttribute("cita", usuarioService.detalleCita(id).get());
+		modelo.addAttribute("cita", usuarioService.detalleCita(id).orElse(null));
 		return "detalle";
 	}
 
