@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>Amazonia: Listado de productos</title>
+
+<main class="d-flex justify-content-center">
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		<div th:each="numero: ${#numbers.sequence(1,10)}" class="col">
+			<div class="card h-100">
+				<img th:src="${'https://prd.place/400/300?' + numero}" src="https://prd.place/400/300" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">Portátil</h5>
+					<p class="card-text">El mejor portátil del mundo</p>
+					<p class="card-text text-end fw-bold">1.234 €</p>
+					<p class="card-text">
+						<a class="btn btn-primary w-100 stretched-link" href="detalle.html" th:href="@{/detalle}">Ver producto</a>
+					</p>
+				</div>
+				<div class="card-footer">
+					<small class="text-body-secondary">Informática</small>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+</html>
