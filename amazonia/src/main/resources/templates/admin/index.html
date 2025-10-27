@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>Amazonia: Listado de productos</title>
+
+<main class="d-flex justify-content-center">
+	<table class="table table-hover table-striped table-bordered">
+		<thead class="table-secondary">
+			<tr>
+				<th>Id</th>
+				<th>Categoria</th>
+				<th>Nombre</th>
+				<th class="text-end">Precio</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="producto: ${productos}" th:object="${producto}">
+				<th th:text="*{id}">5</th>
+				<td th:text="*{categoria.nombre}">Electrodomésticos</td>
+				<td th:text="*{nombre}">Nevera</td>
+				<td th:text="*{precio}" class="text-end">234,56 €</td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="#">Editar</a>
+					<a class="btn btn-sm btn-danger" href="#">Borrar</a>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot class="table-secondary">
+			<tr>
+				<td colspan="4"></td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="#">Añadir</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</main>
+
+</html>

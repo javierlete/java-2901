@@ -4,20 +4,20 @@
 <title>Amazonia: Listado de productos</title>
 
 <main class="d-flex justify-content-center">
-	<div class="row row-cols-1 row-cols-md-3 g-4">
-		<div th:each="numero: ${#numbers.sequence(1,10)}" class="col">
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+		<div th:each="producto: ${productos}" th:object="${producto}" class="col">
 			<div class="card h-100">
-				<img th:src="${'https://prd.place/400/300?' + numero}" src="https://prd.place/400/300" class="card-img-top" alt="...">
+				<img th:src="${'https://prd.place/400/300?' + producto.id}" src="https://prd.place/400/300" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title">Portátil</h5>
-					<p class="card-text">El mejor portátil del mundo</p>
-					<p class="card-text text-end fw-bold">1.234 €</p>
+					<h5 class="card-title" th:text="*{nombre}">Portátil</h5>
+					<p class="card-text" th:text="*{descripcion}">El mejor portátil del mundo</p>
+					<p class="card-text text-end fw-bold" th:text="*{precio}">1.234 €</p>
 					<p class="card-text">
-						<a class="btn btn-primary w-100 stretched-link" href="detalle.html" th:href="@{/detalle}">Ver producto</a>
+						<a class="btn btn-primary w-100 stretched-link" href="detalle.html" th:href="@{/detalle(id=${producto.id})}">Ver producto</a>
 					</p>
 				</div>
 				<div class="card-footer">
-					<small class="text-body-secondary">Informática</small>
+					<small class="text-body-secondary" th:text="*{categoria.nombre}">Informática</small>
 				</div>
 			</div>
 		</div>

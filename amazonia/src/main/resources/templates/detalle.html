@@ -4,23 +4,23 @@
 <title>Amazonia: Listado de productos</title>
 
 <main class="d-flex justify-content-center">
-	<div class="card mb-3">
+	<div class="card mb-3" th:object="${producto}">
 		<div class="row g-0">
 			<div class="col-md-4">
 				<img src="https://prd.place/600/800" class="img-fluid rounded-start" alt="...">
 			</div>
 			<div class="col-md-8">
 				<div class="card-body">
-					<h5 class="card-title">Portátil</h5>
-					<p class="card-text">El mejor portátil del mundo</p>
-					<div class="card-text">
+					<h5 class="card-title" th:text="*{nombre}">Portátil</h5>
+					<p class="card-text" th:text="*{descripcion}">El mejor portátil del mundo</p>
+					<div class="card-text" th:text="*{caracteristicas}">
 						CARACTERISTICAS:
 						
 						<ul>
 							<li>Pantalla superbrillante (TM)</li>
 						</ul>
 					</div>
-					<p class="card-text text-end">
+					<p class="card-text text-end" th:text="*{precio}">
 						<small class="text-body-secondary fw-bold">1.234 €</small>
 					</p>
 				</div>

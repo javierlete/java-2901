@@ -23,8 +23,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/}">Principal</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/}">Informática</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/}">Electrodomésticos</a></li>
+					<li th:each="c: ${categorias}" class="nav-item"><a class="nav-link" href="#" th:href="@{/(idCategoria=${c.id})}" th:text="${c.nombre}">Informática</a></li>
+				</ul>
+				<ul class="navbar-nav mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link" href="admin/index.html" th:href="@{/admin}">Administración</a></li>
 				</ul>
 			</div>
 		</div>
