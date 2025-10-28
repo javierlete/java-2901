@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html th:replace="~{_global :: global(~{::title}, ~{::main})}"
+	xmlns:th="https://thymeleaf.org">
+<title>Amazonia: Listado de productos</title>
+
+<main class="d-flex justify-content-center">
+	<form style="min-width: 30rem" action="index.html" th:action="@{/admin/producto}" method="post"
+		th:object="${producto}">
+		<input type="hidden" th:field="*{id}">
+
+		<div class="row mb-3">
+			<label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
+			<div class="col-sm">
+				<input type="text" class="form-control" th:field="*{nombre}"
+					th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+				<div th:errors="*{nombre}" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="precio" class="col-sm-3 col-form-label">Precio</label>
+			<div class="col-sm">
+				<input type="number" step=".01" class="form-control"
+					th:field="*{precio}"
+					th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'">
+				<div th:errors="*{precio}" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="categoria" class="col-sm-3 col-form-label">Categoría</label>
+			<div class="col-sm">
+				<select class="form-select" th:field="*{categoria}"
+					th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid'">
+					<option th:each="categoria: ${categorias}"
+						th:text="${categoria.nombre}" th:value="${categoria.id}">CATEGORIA</option>
+				</select>
+				<div th:errors="*{categoria}" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="descripcion" class="col-sm-3 col-form-label">Descripción</label>
+			<div class="col-sm">
+				<textarea class="form-control" th:field="*{descripcion}"
+					th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'"></textarea>
+				<div th:errors="*{descripcion}" class="invalid-feedback"></div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="caracteristicas" class="col-sm-3 col-form-label">Características</label>
+			<div class="col-sm">
+				<textarea class="form-control" th:field="*{caracteristicas}"
+					th:classappend="${#fields.hasErrors('caracteristicas')} ? 'is-invalid'"></textarea>
+				<div th:errors="*{caracteristicas}" class="invalid-feedback"></div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="offset-sm-3 col-sm">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<ul>
+						<li class="text-danger" th:each="err : ${#fields.globalErrors()}"
+							th:text="${err}"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</main>
+
+</html>

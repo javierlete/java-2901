@@ -7,7 +7,7 @@
 	<table class="table table-hover table-striped table-bordered">
 		<thead class="table-secondary">
 			<tr>
-				<th>Id</th>
+				<th class="text-end">Id</th>
 				<th>Categoria</th>
 				<th>Nombre</th>
 				<th class="text-end">Precio</th>
@@ -16,13 +16,13 @@
 		</thead>
 		<tbody>
 			<tr th:each="producto: ${productos}" th:object="${producto}">
-				<th th:text="*{id}">5</th>
+				<th th:text="*{id}" class="text-end">5</th>
 				<td th:text="*{categoria.nombre}">Electrodomésticos</td>
 				<td th:text="*{nombre}">Nevera</td>
-				<td th:text="*{precio}" class="text-end">234,56 €</td>
+				<td th:text="${#numbers.formatCurrency(producto.precio)}" class="text-end">234,56 €</td>
 				<td>
-					<a class="btn btn-sm btn-primary" href="#">Editar</a>
-					<a class="btn btn-sm btn-danger" href="#">Borrar</a>
+					<a class="btn btn-sm btn-primary" href="producto.html" th:href="@{/admin/producto(id=${producto.id})}">Editar</a>
+					<a class="btn btn-sm btn-danger" href="#" th:href="@{/admin/borrar(id=${producto.id})}">Borrar</a>
 				</td>
 			</tr>
 		</tbody>
@@ -30,7 +30,7 @@
 			<tr>
 				<td colspan="4"></td>
 				<td>
-					<a class="btn btn-sm btn-primary" href="#">Añadir</a>
+					<a class="btn btn-sm btn-primary" href="producto.html" th:href="@{/admin/producto}">Añadir</a>
 				</td>
 			</tr>
 		</tfoot>

@@ -20,7 +20,7 @@
 							<li>Pantalla superbrillante (TM)</li>
 						</ul>
 					</div>
-					<p class="card-text text-end" th:text="*{precio}">
+					<p class="card-text text-end" th:text="${#numbers.formatCurrency(producto.precio)}">
 						<small class="text-body-secondary fw-bold">1.234 €</small>
 					</p>
 				</div>

@@ -11,7 +11,7 @@
 				<div class="card-body">
 					<h5 class="card-title" th:text="*{nombre}">Portátil</h5>
 					<p class="card-text" th:text="*{descripcion}">El mejor portátil del mundo</p>
-					<p class="card-text text-end fw-bold" th:text="*{precio}">1.234 €</p>
+					<p class="card-text text-end fw-bold" th:text="${#numbers.formatCurrency(producto.precio)}">1.234 €</p>
 					<p class="card-text">
 						<a class="btn btn-primary w-100 stretched-link" href="detalle.html" th:href="@{/detalle(id=${producto.id})}">Ver producto</a>
 					</p>
