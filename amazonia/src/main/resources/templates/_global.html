@@ -11,7 +11,7 @@
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="h-100 d-flex flex-column justify-content-between">
+<body class="h-100 d-flex flex-column">
 	<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#" th:href="@{/}">Amazonia</a>
@@ -30,13 +30,31 @@
 					<li class="nav-item" sec:authorize="hasRole('ADMINISTRADOR')"><a class="nav-link" href="admin/index.html" th:href="@{/admin}">Administración</a></li>
 					<li class="navbar-text" sec:authorize="isAuthenticated()" sec:authentication="name">USUARIO</li>
 					<li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" href="admin/index.html" th:href="@{/login}">Iniciar sesión</a></li>
-					<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" href="admin/index.html" th:href="@{/logout}">Cerrar sesión</a></li>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+						<form th:action="@{/logout}" method="post">
+							<button class="nav-link">Cerrar sesión</button>
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
+	<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show"
+		role="alert">
+		Usuario o contraseña incorrectos
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
 
-	<div class="container">
+	<div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show"
+		role="alert">
+		Se ha cerrado la sesión correctamente
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close"></button>
+	</div>
+	
+	<div class="container my-5 my-auto">
 		<main th:replace="${contenido}">CONTENIDO POR DEFECTO</main>
 	</div>
 
