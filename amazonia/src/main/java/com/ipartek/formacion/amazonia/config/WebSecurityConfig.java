@@ -8,9 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,7 +38,7 @@ public class WebSecurityConfig {
     
 	@Bean
 	PasswordEncoder passwordEncoder() {
-	    return NoOpPasswordEncoder.getInstance(); // new BCryptPasswordEncoder();
+	    return new BCryptPasswordEncoder(14);
 	}
 	
 	// AUTORIZACIÓN
