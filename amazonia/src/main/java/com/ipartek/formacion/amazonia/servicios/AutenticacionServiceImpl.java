@@ -2,6 +2,7 @@ package com.ipartek.formacion.amazonia.servicios;
 
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,11 +31,7 @@ public class AutenticacionServiceImpl implements UserDetailsService {
 		
 		UsuarioSecurity usuarioSecurity = new UsuarioSecurity();
 		
-		usuarioSecurity.setId(usuario.getId());
-		usuarioSecurity.setNombre(usuario.getNombre());
-		usuarioSecurity.setEmail(usuario.getEmail());
-		usuarioSecurity.setPassword(usuario.getPassword());
-		usuarioSecurity.setRol(usuario.getRol());
+		BeanUtils.copyProperties(usuario, usuarioSecurity);
 		
 		return usuarioSecurity;
 	}
