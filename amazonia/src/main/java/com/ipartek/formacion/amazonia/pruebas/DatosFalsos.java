@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.ipartek.formacion.amazonia.entidades.Categoria;
 import com.ipartek.formacion.amazonia.entidades.Producto;
+import com.ipartek.formacion.amazonia.entidades.Usuario;
 import com.ipartek.formacion.amazonia.repositorios.CategoriaRepository;
 import com.ipartek.formacion.amazonia.repositorios.ProductoRepository;
+import com.ipartek.formacion.amazonia.repositorios.UsuarioRepository;
 
 @Component
 public class DatosFalsos implements CommandLineRunner {
@@ -18,6 +20,9 @@ public class DatosFalsos implements CommandLineRunner {
 	
 	@Autowired
 	private ProductoRepository productoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -38,6 +43,10 @@ public class DatosFalsos implements CommandLineRunner {
 		productoRepository.save(raton);
 		productoRepository.save(nevera);
 		productoRepository.save(tv);
+		
+		usuarioRepository.save(Usuario.builder().nombre("Javier").email("javier@email.net").password("$2a$14$06XX/.x8TT6g6I2XrhgvXOKQwYzk8kSepcs/2lT5OfBBFV2KHaG6a").rol("ADMINISTRADOR").build());
+		usuarioRepository.save(Usuario.builder().nombre("Pepe").email("pepe@email.net").password("$2a$14$JvwUG6pr6o5SlRgEIFydgu.1svXi1njDR/RO2XO4h7qu5k0Yr916W").rol("USUARIO").build());
+		usuarioRepository.save(Usuario.builder().nombre("Juan").email("juan@email.net").password("$2a$14$BM0t3Bx6zMsrtoEoAGyhYOLF2GhdCRpN2xdKhW84RR3ViPFiYRJF.").rol("USUARIO").build());
 	}
 
 }
