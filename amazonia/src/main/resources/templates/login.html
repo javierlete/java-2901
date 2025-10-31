@@ -5,19 +5,9 @@
 
 <main class="d-flex justify-content-center">
 	<form th:action="@{/login}" method="post">
-		<div class="row mb-3">
-			<label for="email" class="col-sm-3 col-form-label">Email</label>
-			<div class="col-sm">
-				<input type="email" class="form-control" id="email" name="username">
-			</div>
-		</div>
-		<div class="row mb-3">
-			<label for="password" class="col-sm-3 col-form-label">Contraseña</label>
-			<div class="col-sm">
-				<input type="password" class="form-control" id="password"
-					name="password">
-			</div>
-		</div>
+		<div th:replace="_fragmentos :: labelInput('Email', 'username', false, 'email')"></div>
+		<div th:replace="_fragmentos :: labelInput('Contraseña', 'password', false, 'password')"></div>
+		
 		<div class="row mb-3">
 			<div class="offset-sm-3 col-sm">
 				<button type="submit" class="btn btn-primary">Iniciar

@@ -8,23 +8,9 @@
 		th:object="${producto}">
 		<input type="hidden" th:field="*{id}">
 
-		<div class="row mb-3">
-			<label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
-			<div class="col-sm">
-				<input type="text" class="form-control" th:field="*{nombre}"
-					th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
-				<div th:errors="*{nombre}" class="invalid-feedback"></div>
-			</div>
-		</div>
-		<div class="row mb-3">
-			<label for="precio" class="col-sm-3 col-form-label">Precio</label>
-			<div class="col-sm">
-				<input type="number" step=".01" class="form-control"
-					th:field="*{precio}"
-					th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'">
-				<div th:errors="*{precio}" class="invalid-feedback"></div>
-			</div>
-		</div>
+		<div th:replace="_fragmentos :: labelInput('Nombre', 'nombre', true, 'text')"></div>
+		<div th:replace="_fragmentos :: labelInput('Precio', 'precio', true, 'number')"></div>
+		
 		<div class="row mb-3">
 			<label for="categoria" class="col-sm-3 col-form-label">Categoría</label>
 			<div class="col-sm">

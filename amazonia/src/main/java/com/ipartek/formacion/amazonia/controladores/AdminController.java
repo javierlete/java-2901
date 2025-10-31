@@ -42,6 +42,8 @@ public class AdminController {
 
 	@PostMapping("producto")
 	public String productoPost(@Valid Producto producto, BindingResult bindingResult, Model modelo) {
+		System.out.println(producto);
+		
 		if (bindingResult.hasErrors()) {
 			return "admin/producto";
 		}

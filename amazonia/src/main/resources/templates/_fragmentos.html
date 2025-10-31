@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div class="row mb-3"
+	th:fragment="labelInput(etiqueta, nombre, conVinculo, tipo)">
+	<label th:for="${nombre}" class="col-sm-3 col-form-label"
+		th:text="${etiqueta}">ETIQUETA</label>
+	
+	<div th:if="${!conVinculo}" class="col-sm">
+		<input class="form-control" th:id="${nombre}" th:name="${nombre}"
+			type="text" th:attr="type=${tipo}">
+	</div>
+	
+	<div th:if="${conVinculo}" class="col-sm">
+		<input class="form-control" th:field="*{__${nombre}__}" type="text"
+			th:attr="type=${tipo}"
+			th:classappend="${#fields.hasErrors(nombre)} ? 'is-invalid'">
+		<div th:errors="*{__${nombre}__}" class="invalid-feedback"></div>
+	</div>
+</div>
+
+</html>
