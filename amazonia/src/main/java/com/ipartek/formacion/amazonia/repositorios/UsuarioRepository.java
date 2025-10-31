@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.ipartek.formacion.amazonia.entidades.Usuario;
 
-@RepositoryRestResource(collectionResourceRel = "productos", path = "productos")
+@RepositoryRestResource(collectionResourceRel = "usuarios", path = "usuarios")
 public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
 	Optional<Usuario> findByEmail(String email);
 }
