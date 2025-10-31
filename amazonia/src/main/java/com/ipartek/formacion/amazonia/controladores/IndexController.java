@@ -15,7 +15,6 @@ public class IndexController {
 	@GetMapping
 	public String index(Model modelo, Long idCategoria) {
 		modelo.addAttribute("productos", anonimoService.listadoProductos(idCategoria));
-		modelo.addAttribute("categorias", anonimoService.listadoCategorias());
 
 		return "index";
 	}
@@ -23,7 +22,6 @@ public class IndexController {
 	@GetMapping("detalle")
 	public String detalle(Long id, Model modelo) {
 		modelo.addAttribute("producto", anonimoService.detalleProducto(id));
-		modelo.addAttribute("categorias", anonimoService.listadoCategorias());
 
 		return "detalle";
 	}

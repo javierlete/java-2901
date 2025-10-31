@@ -22,7 +22,6 @@ public class AdminController {
 
 	@GetMapping
 	public String index(Model modelo) {
-		modelo.addAttribute("categorias", administradorService.listadoCategorias());
 		modelo.addAttribute("productos", administradorService.listadoProductos());
 
 		return "admin/index";
@@ -37,7 +36,6 @@ public class AdminController {
 		}
 
 		modelo.addAttribute("producto", producto);
-		modelo.addAttribute("categorias", administradorService.listadoCategorias());
 
 		return "admin/producto";
 	}
@@ -45,8 +43,6 @@ public class AdminController {
 	@PostMapping("producto")
 	public String productoPost(@Valid Producto producto, BindingResult bindingResult, Model modelo) {
 		if (bindingResult.hasErrors()) {
-			modelo.addAttribute("categorias", administradorService.listadoCategorias());
-
 			return "admin/producto";
 		}
 
