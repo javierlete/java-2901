@@ -1,4 +1,4 @@
-package com.ipartek.formacion.amazonia.servicios;
+package com.ipartek.formacion.amazonia.config;
 
 import java.util.Optional;
 
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ipartek.formacion.amazonia.config.UsuarioSecurity;
 import com.ipartek.formacion.amazonia.entidades.Usuario;
 import com.ipartek.formacion.amazonia.repositorios.UsuarioRepository;
 

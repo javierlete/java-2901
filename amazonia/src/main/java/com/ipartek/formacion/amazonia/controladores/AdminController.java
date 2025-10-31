@@ -24,45 +24,45 @@ public class AdminController {
 	public String index(Model modelo) {
 		modelo.addAttribute("categorias", administradorService.listadoCategorias());
 		modelo.addAttribute("productos", administradorService.listadoProductos());
-		
+
 		return "admin/index";
 	}
-	
+
 	@GetMapping("producto")
 	public String producto(Model modelo, Long id) {
 		Producto producto = Producto.builder().build();
-		
-		if(id != null) {
+
+		if (id != null) {
 			producto = administradorService.detalleProducto(id);
-		} 
-		
+		}
+
 		modelo.addAttribute("producto", producto);
 		modelo.addAttribute("categorias", administradorService.listadoCategorias());
 
 		return "admin/producto";
 	}
-	
+
 	@PostMapping("producto")
 	public String productoPost(@Valid Producto producto, BindingResult bindingResult, Model modelo) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			modelo.addAttribute("categorias", administradorService.listadoCategorias());
-			
+
 			return "admin/producto";
 		}
-		
-		if(producto.getId() != null) {
+
+		if (producto.getId() != null) {
 			administradorService.modificacionProducto(producto);
 		} else {
 			administradorService.altaProducto(producto);
 		}
-		
+
 		return "redirect:/admin";
 	}
-	
+
 	@GetMapping("borrar")
 	public String borrar(Long id) {
 		administradorService.bajaProducto(id);
-		
+
 		return "redirect:/admin";
 	}
 }
