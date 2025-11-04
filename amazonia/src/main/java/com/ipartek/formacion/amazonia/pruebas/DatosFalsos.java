@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import com.ipartek.formacion.amazonia.entidades.Categoria;
 import com.ipartek.formacion.amazonia.entidades.Producto;
@@ -13,7 +12,7 @@ import com.ipartek.formacion.amazonia.repositorios.CategoriaRepository;
 import com.ipartek.formacion.amazonia.repositorios.ProductoRepository;
 import com.ipartek.formacion.amazonia.repositorios.UsuarioRepository;
 
-@Component
+// @Component
 public class DatosFalsos implements CommandLineRunner {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
